@@ -12,30 +12,44 @@ public class EvenIterator implements Iterator<Integer> {
         this.data = data;
     }
 
-    public boolean checkNextElm(int rowIn) {
-        boolean rsl = false;
-        for (int rowArr = rowIn; rowArr < data.length; rowArr++) {
-            if (data[rowArr] % 2 == 0) {
-                rsl = true;
-                row = rowArr + 1;
-                break;
+    public boolean evenNumber(int number) {
+        return number % 2 == 0;
+    }
+
+    public void indexData() {
+        int lnData = data.length;
+        while (row < lnData && !evenNumber(data[row])) {
+            if (row + 1 < lnData) {
+                row++;
+                continue;
             }
+            break;
         }
-        return rsl;
     }
 
     @Override
     public boolean hasNext() {
-        return checkNextElm(row);
-//        return point < data.length;
+        if (row >= data.length) {
+            return false;
+        }
+        indexData();
+        boolean rsl = evenNumber(data[row]);
+        row++;
+        return rsl;
     }
 
     @Override
     public Integer next() {
-        if (!hasNext()) {
+        if (row >= data.length) {
             throw new NoSuchElementException();
         }
-        return data[point++];
+        indexData();
+        if (!evenNumber(data[row]) || row >= data.length) {
+            throw new NoSuchElementException();
+        }
+        Integer rsl = data[row];
+        row++;
+        return rsl;
     }
 
     @Override
@@ -44,27 +58,18 @@ public class EvenIterator implements Iterator<Integer> {
     }
 
     public static void main(String[] args) {
-        EvenIterator evenIterator = new EvenIterator(new int[] {1, 2, 3, 4, 5, 6, 7});
+        EvenIterator evenIterator = new EvenIterator(new int[]{1, 2, 3, 4, 5, 6, 7, 8});
         System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
-        System.out.println(evenIterator.hasNext());
+
+        System.out.println(evenIterator.next());
+        System.out.println(evenIterator.next());
+        System.out.println(evenIterator.next());
 
         System.out.println(evenIterator.hasNext());
         System.out.println(evenIterator.hasNext());
 
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
-//        System.out.println(evenIterator.next());
+        System.out.println(evenIterator.next());
+
+
     }
 }
