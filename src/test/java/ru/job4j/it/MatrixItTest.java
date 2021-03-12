@@ -90,4 +90,14 @@ public class MatrixItTest {
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(false));
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenMultiNext2() {
+        int[][] in = {
+                {1}, {}
+        };
+        MatrixIt it = new MatrixIt(in);
+        assertThat(it.next(), is(1));
+        it.next();
+    }
 }
