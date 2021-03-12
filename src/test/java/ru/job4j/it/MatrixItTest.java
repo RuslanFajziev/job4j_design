@@ -3,6 +3,7 @@ package ru.job4j.it;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import org.hamcrest.core.Is;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
@@ -99,5 +100,21 @@ public class MatrixItTest {
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
         it.next();
+    }
+
+    @Test
+    public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
+        int[][] in = {
+                {1}, {2}, {3}, {4}
+        };
+        MatrixIt it = new MatrixIt(in);
+        assertThat(it.hasNext(), Is.is(true));
+        assertThat(it.hasNext(), Is.is(true));
+        assertThat(it.hasNext(), Is.is(true));
+        assertThat(it.hasNext(), Is.is(true));
+        assertThat(it.hasNext(), Is.is(true));
+        assertThat(it.next(), Is.is(1));
+        assertThat(it.next(), Is.is(2));
+        assertThat(it.next(), Is.is(3));
     }
 }
