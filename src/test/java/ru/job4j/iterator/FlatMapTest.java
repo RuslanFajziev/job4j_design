@@ -39,6 +39,7 @@ public class FlatMapTest {
         FlatMap<Integer> flat = new FlatMap<>(data);
         assertThat(flat.hasNext(), is(true));
         assertThat(flat.hasNext(), is(true));
+        assertThat(flat.hasNext(), is(true));
     }
 
     @Test
