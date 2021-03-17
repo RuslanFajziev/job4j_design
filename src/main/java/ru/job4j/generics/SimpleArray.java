@@ -56,7 +56,11 @@ public class SimpleArray<T> implements Iterator<Object> {
 
     public void add(T model) {
         int index = indexForAdd();
-        data[index] = model;
+        if (index >= 0) {
+            data[index] = model;
+        } else {
+            System.out.println("No space available to add item");
+        }
     }
 
     public void set(int index, T model) {
@@ -66,11 +70,8 @@ public class SimpleArray<T> implements Iterator<Object> {
 
     public void remove(int index) {
         Objects.checkIndex(index, size);
-        Object[] newArray = new Object[size - 1];
-        System.arraycopy(data, 0, newArray, 0, index);
-        System.arraycopy(data, index + 1, newArray, index, size - index - 1);
-        data = newArray;
-        size = data.length;
+        System.arraycopy(data, index + 1, data, index, size - index - 1);
+        data[size - 1] = null;
     }
 
     public Object get(int index) {
@@ -84,15 +85,6 @@ public class SimpleArray<T> implements Iterator<Object> {
                 return i;
             }
         }
-        int rsl = size;
-        resizeArray();
-        return rsl;
-    }
-
-    public void resizeArray() {
-        Object[] newArray = new Object[size * 2];
-        System.arraycopy(data, 0, newArray, 0, size);
-        data = newArray;
-        size = data.length;
+        return -1;
     }
 }

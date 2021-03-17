@@ -25,33 +25,17 @@ public class SimpleArrayTest {
     }
 
     @Test
-    public void add() {
-        simpleArray.add(8);
-        assertThat(simpleArray.get(7), is(8));
-    }
-
-    @Test
     public void size() {
         simpleArray.add(8);
-        assertThat(simpleArray.getSize(), is(14));
-    }
-
-    @Test
-    public void getNull() {
-        simpleArray.add(8);
-        assertThat(simpleArray.get(8), is((Object) null));
+        assertThat(simpleArray.getSize(), is(7));
     }
 
     @Test
     public void remove() {
         simpleArray.remove(6);
         assertThat(simpleArray.get(5), is(6));
-    }
-
-    @Test
-    public void sizeRemove() {
-        simpleArray.remove(6);
-        assertThat(simpleArray.getSize(), is(6));
+        assertThat(simpleArray.getSize(), is(7));
+        assertThat(simpleArray.get(6), is((Object) null));
     }
 
     @Test
@@ -97,7 +81,7 @@ public class SimpleArrayTest {
         simpleArray.next();
         simpleArray.next();
         simpleArray.remove();
-        assertThat(simpleArray.getSize(), is(6));
+        assertThat(simpleArray.getSize(), is(7));
         assertThat(simpleArray.getRow(), is(2));
         assertThat(simpleArray.get(simpleArray.getRow()), is(3));
         assertThat(simpleArray.next(), is(3));
