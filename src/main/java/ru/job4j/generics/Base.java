@@ -1,13 +1,15 @@
 package ru.job4j.generics;
 
 public abstract class Base {
-    private final int id;
+    private final String id;
 
-    public Base(final int id) {
+    public Base(final String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
+
+
 }
