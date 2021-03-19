@@ -1,12 +1,13 @@
 package ru.job4j.generics;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 
-public class SimpleArray<T> implements Iterator<Object> {
+import static java.util.Objects.checkIndex;
+
+public class SimpleArray<T> implements Iterable<T> {
     private Object[] data;
-    private int size;
+    private SimpleArrayIterator simpleArrayIterator = new SimpleArrayIterator();
+    private int size = 0;
     private int row = 0;
 
     public SimpleArray(int sizeArray) {
@@ -14,25 +15,12 @@ public class SimpleArray<T> implements Iterator<Object> {
             throw new IllegalArgumentException();
         }
         data = new Object[sizeArray];
-        size = data.length;
     }
 
     @Override
-    public boolean hasNext() {
-        return row < data.length;
-    }
-
-    @Override
-    public Object next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        return data[row++];
-    }
-
-    @Override
-    public void remove() {
-        remove(row--);
+    public Iterator<T> iterator() {
+        simpleArrayIterator.setData(data);
+        return simpleArrayIterator;
     }
 
     public Object[] getData() {
@@ -58,29 +46,31 @@ public class SimpleArray<T> implements Iterator<Object> {
         int index = indexForAdd();
         if (index >= 0) {
             data[index] = model;
+            ++size;
         } else {
             System.out.println("No space available to add item");
         }
     }
 
     public void set(int index, T model) {
-        Objects.checkIndex(index, size);
+        checkIndex(index, size);
         data[index] = model;
     }
 
     public void remove(int index) {
-        Objects.checkIndex(index, size);
+        checkIndex(index, size);
         System.arraycopy(data, index + 1, data, index, size - index - 1);
         data[size - 1] = null;
+        --size;
     }
 
     public Object get(int index) {
-        Objects.checkIndex(index, size);
+        checkIndex(index, size);
         return data[index];
     }
 
     public int indexForAdd() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < data.length; i++) {
             if (data[i] == null) {
                 return i;
             }

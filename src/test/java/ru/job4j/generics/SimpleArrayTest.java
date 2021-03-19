@@ -25,17 +25,10 @@ public class SimpleArrayTest {
     }
 
     @Test
-    public void size() {
-        simpleArray.add(8);
-        assertThat(simpleArray.getSize(), is(7));
-    }
-
-    @Test
     public void remove() {
-        simpleArray.remove(6);
-        assertThat(simpleArray.get(5), is(6));
-        assertThat(simpleArray.getSize(), is(7));
-        assertThat(simpleArray.get(6), is((Object) null));
+        simpleArray.remove(3);
+        assertThat(simpleArray.get(3), is(5));
+        assertThat(simpleArray.get(5), is(7));
     }
 
     @Test
@@ -56,35 +49,49 @@ public class SimpleArrayTest {
 
     @Test
     public void iteratorTest() {
-        assertThat(simpleArray.next(), is(1));
-        assertThat(simpleArray.next(), is(2));
-        simpleArray.set(2, null);
-        assertThat(simpleArray.next(), is((Object) null));
-        assertThat(simpleArray.next(), is(4));
+        assertThat(simpleArray.iterator().next(), is(1));
+        assertThat(simpleArray.iterator().next(), is(2));
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        assertThat(simpleArray.iterator().next(), is(7));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void iteratorTest2() {
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
     }
 
     @Test
     public void iteratorTest3() {
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.next();
-        simpleArray.remove();
-        assertThat(simpleArray.getSize(), is(7));
-        assertThat(simpleArray.getRow(), is(2));
-        assertThat(simpleArray.get(simpleArray.getRow()), is(3));
-        assertThat(simpleArray.next(), is(3));
-        assertThat(simpleArray.next(), is(5));
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        assertFalse(simpleArray.iterator().hasNext());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void setTest() {
+        simpleArray.set(7, "fdfdf");
+    }
+
+    @Test
+    public void add() {
+        simpleArray.remove(3);
+        simpleArray.add(999);
+        assertThat(simpleArray.get(3), is(5));
+        assertThat(simpleArray.get(6), is(999));
     }
 }
