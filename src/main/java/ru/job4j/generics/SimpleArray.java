@@ -60,9 +60,8 @@ public class SimpleArray<T> implements Iterable<T> {
     public void remove(int index) {
         checkIndex(index, size);
         System.arraycopy(data, index + 1, data, index, size - index - 1);
-        data[size - 1] = null;
-        --size;
-    }
+        data[--size] = null;
+     }
 
     public Object get(int index) {
         checkIndex(index, size);
