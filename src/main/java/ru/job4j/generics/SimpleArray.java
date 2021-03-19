@@ -8,7 +8,6 @@ public class SimpleArray<T> implements Iterable<T> {
     private Object[] data;
     private SimpleArrayIterator simpleArrayIterator = new SimpleArrayIterator();
     private int size = 0;
-    private int row = 0;
 
     public SimpleArray(int sizeArray) {
         if (sizeArray <= 0) {
@@ -21,25 +20,6 @@ public class SimpleArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         simpleArrayIterator.setData(data);
         return simpleArrayIterator;
-    }
-
-    public Object[] getData() {
-        return data;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void printArray() {
-        for (var ell : data) {
-            System.out.println(ell);
-        }
-
     }
 
     public void add(T model) {
