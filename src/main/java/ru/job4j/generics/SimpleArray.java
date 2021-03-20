@@ -19,15 +19,14 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         simpleArrayIterator.setData(data);
+        simpleArrayIterator.setSize(size);
         return simpleArrayIterator;
     }
 
     public void add(T model) {
-        int index = indexForAdd();
-        if (index >= 0) {
-            data[index] = model;
-            ++size;
-        } else {
+        if (size < data.length) {
+            data[size++] = model;
+         } else {
             System.out.println("No space available to add item");
         }
     }
@@ -46,14 +45,5 @@ public class SimpleArray<T> implements Iterable<T> {
     public Object get(int index) {
         checkIndex(index, size);
         return data[index];
-    }
-
-    public int indexForAdd() {
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] == null) {
-                return i;
-            }
-        }
-        return -1;
     }
 }

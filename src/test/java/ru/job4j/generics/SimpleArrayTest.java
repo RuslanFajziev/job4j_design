@@ -37,8 +37,8 @@ public class SimpleArrayTest {
         simpleArray.add(999);
         simpleArray.set(3, null);
         simpleArray.add(555);
-        assertThat(simpleArray.get(1), is(999));
-        assertThat(simpleArray.get(3), is(555));
+        assertThat(simpleArray.get(1), is((Object) null));
+        assertThat(simpleArray.get(3), is((Object) null));
     }
 
     @Test
@@ -94,4 +94,17 @@ public class SimpleArrayTest {
         assertThat(simpleArray.get(3), is(5));
         assertThat(simpleArray.get(6), is(999));
     }
+
+    @Test
+    public void iteratorTest4() {
+        simpleArray.remove(0);
+        simpleArray.remove(1);
+        simpleArray.remove(2);
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        simpleArray.iterator().next();
+        assertFalse(simpleArray.iterator().hasNext());
+    }
+
 }
