@@ -4,20 +4,17 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleArrayIterator<T> implements Iterator<Object> {
-    private int row = 0;
+    private int row;
     private int size = 0;
     private Object[] data;
 
     public void setData(Object[] data) {
         this.data = data;
+        this.row = 0;
     }
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
     }
 
     @Override

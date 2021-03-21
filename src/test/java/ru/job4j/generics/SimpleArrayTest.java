@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertThat;
@@ -95,16 +96,25 @@ public class SimpleArrayTest {
         assertThat(simpleArray.get(6), is(999));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void iteratorTest4() {
         simpleArray.remove(0);
-        simpleArray.remove(1);
-        simpleArray.remove(2);
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        assertFalse(simpleArray.iterator().hasNext());
+        simpleArray.remove(0);
+        simpleArray.remove(0);
+        Iterator iterator = simpleArray.iterator();
+        assertThat(iterator.next(), is(4));
+        assertThat(iterator.next(), is(5));
+        assertThat(iterator.next(), is(6));
+        assertThat(iterator.next(), is(7));
+        iterator.next();
+    }
+
+    @Test
+    public void iteratorTest5() {
+        Iterator iterator = simpleArray.iterator();
+        assertThat(iterator.next(), is(1));
+        Iterator iterator1 = simpleArray.iterator();
+        assertThat(iterator1.next(), is(1));
     }
 
 }
