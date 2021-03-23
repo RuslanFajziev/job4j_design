@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class SimpleArrayTest {
     SimpleArray simpleArray = new SimpleArray(7);
+    Iterator iterator = simpleArray.iterator();
 
     @Before
     public void setUp() {
@@ -50,37 +51,40 @@ public class SimpleArrayTest {
 
     @Test
     public void iteratorTest() {
-        assertThat(simpleArray.iterator().next(), is(1));
-        assertThat(simpleArray.iterator().next(), is(2));
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        assertThat(simpleArray.iterator().next(), is(7));
+        Iterator iterator = simpleArray.iterator();
+        assertThat(iterator.next(), is(1));
+        assertThat(iterator.next(), is(2));
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertThat(iterator.next(), is(7));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void iteratorTest2() {
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
+        Iterator iterator = simpleArray.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
     }
 
     @Test
     public void iteratorTest3() {
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        simpleArray.iterator().next();
-        assertFalse(simpleArray.iterator().hasNext());
+        Iterator iterator = simpleArray.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertFalse(iterator.hasNext());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
