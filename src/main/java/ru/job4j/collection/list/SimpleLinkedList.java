@@ -47,11 +47,11 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            int cursor = 0;
+            Node<E> cursorItem = first;
 
             @Override
             public boolean hasNext() {
-                return cursor < getSize();
+                return cursorItem.getNext() != last;
             }
 
             @Override
@@ -59,7 +59,9 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return get(cursor++);
+                E item = cursorItem.getNext().getItem();
+                cursorItem = cursorItem.getNext();
+                return item;
             }
         };
     }
