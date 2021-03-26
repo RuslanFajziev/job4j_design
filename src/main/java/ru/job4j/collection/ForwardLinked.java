@@ -41,11 +41,12 @@ public class ForwardLinked<T> implements Iterable<T> {
         }
         if (head.next == null) {
             head = null;
+            return tail.value;
         } else {
             tail.next = null;
             cursor.next = null;
+            return tail.value;
         }
-        return tail.value;
     }
 
     @Override
