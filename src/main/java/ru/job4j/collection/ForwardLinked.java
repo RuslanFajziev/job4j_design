@@ -21,27 +21,6 @@ public class ForwardLinked<T> implements Iterable<T> {
         tail.next = node;
     }
 
-    public void addBottomToTop(T value) {
-        Node<T> node = new Node<T>(value, null);
-        if (marker == 0) {
-            Node<T> tail = head;
-            node.next = tail;
-            head = node;
-            markerHead = node;
-            marker = 1;
-        } else if (marker == 1) {
-            node.next = markerHead.next;
-            markerHead = node;
-            head.next = markerHead;
-            marker = 2;
-        } else if (marker > 1) {
-            node.next = markerHead.next;
-            Node<T> tail = node;
-            markerHead.next = tail;
-            markerHead = node;
-        }
-    }
-
     public T deleteFirst() {
         if (head == null) {
             throw new NoSuchElementException();
@@ -73,27 +52,20 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public boolean revert() {
-        boolean rsl = false;
-        Node<T> tail = head;
-        if (head == null) {
-            return rsl;
-        } else if (tail.next == null) {
-            return rsl;
+        if (head == null || head.next == null) {
+            return false;
         }
-
-        int counter = 1;
-        rsl = true;
-        while (tail.next != null) {
-            tail = tail.next;
-            counter++;
+        Node<T> nextRight;
+        Node<T> nextLeft = null;
+        Node<T> cursor = head;
+        while (cursor != null) {
+            nextRight = cursor.next;
+            cursor.next = nextLeft;
+            nextLeft = cursor;
+            head = nextLeft;
+            cursor = nextRight;
         }
-
-        while (counter-- != 0) {
-            T value = deleteLats();
-            addBottomToTop(value);
-        }
-        marker = 0;
-        return rsl;
+        return true;
     }
 
     @Override
