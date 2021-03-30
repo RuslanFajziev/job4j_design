@@ -33,7 +33,7 @@ public class ListUtils {
     public static <T> void removeIf(List<T> list, Predicate<T> filter) {
         ListIterator<T> i = list.listIterator();
         while (i.hasNext()) {
-            if (!filter.test(i.next())) {
+            if (filter.test(i.next())) {
                 i.remove();
             }
         }
@@ -51,20 +51,10 @@ public class ListUtils {
     public static <T> void removeAll(List<T> list, List<T> elements) {
         ListIterator<T> i = list.listIterator();
         while (i.hasNext()) {
-            if (checkList(elements, i.next())) {
+            if (elements.contains(i.next())) {
                 i.remove();
             }
         }
 
     }
-
-    public static <T> boolean checkList(List<T> elements, T element) {
-        for (T elm : elements) {
-            if (elm.equals(element)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

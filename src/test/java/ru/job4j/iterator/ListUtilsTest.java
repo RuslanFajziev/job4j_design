@@ -34,7 +34,7 @@ public class ListUtilsTest {
 
     @Test
     public void removeFilterInteger() {
-        Predicate<Integer> predicate = x -> x > 0;
+        Predicate<Integer> predicate = x -> x < 1;
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2, 3, -5, 25, -7));
         ListUtils.removeIf(input, predicate);
         assertThat(Arrays.asList(1, 2, 3, 25), Is.is(input));
@@ -42,7 +42,7 @@ public class ListUtilsTest {
 
     @Test
     public void removeFilterString() {
-        Predicate<String> predicate = x -> x.equals("abc");
+        Predicate<String> predicate = x -> x.equals("bc") || x.equals("cbbb");
         List<String> input = new ArrayList<>(Arrays.asList("abc", "bc", "cbbb", "abc"));
         ListUtils.removeIf(input, predicate);
         assertThat(Arrays.asList("abc", "abc"), Is.is(input));
