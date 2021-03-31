@@ -1,9 +1,6 @@
 package ru.job4j.collection;
 
-import ru.job4j.generics.SimpleArrayIterator;
-
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import static java.util.Objects.checkIndex;
 
@@ -26,6 +23,7 @@ public class SimpleArray2<T> implements Iterable<T> {
     public SimpleArray2() {
         this.sizeArray = 10;
         container = new Object[sizeArray];
+        this.changesCont = 0;
     }
 
     public Object get(int index) {
