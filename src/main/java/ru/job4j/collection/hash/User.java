@@ -47,23 +47,30 @@ public class User {
                 2,
                 1));
 //        User usr2 = new User("Semen", 3, new GregorianCalendar(1980, 5 , 7));
-        Map<User, Object> map = new HashMap();
-        map.put(usr1, new Object());
-        map.put(usr2, new Object());
-        System.out.println("-------------- hashCode --------------");
-        System.out.println(usr1.hashCode());
-        System.out.println(usr2.hashCode());
-        System.out.println(Objects.equals(usr1.hashCode(), usr2.hashCode()));
-        System.out.println("-------------- hash --------------");
-        System.out.println(Objects.hash(usr1.hashCode()));
-        System.out.println(Objects.hash(usr2.hashCode()));
-        System.out.println(Objects.equals(Objects.hash(usr1.hashCode()), Objects.hash(usr2.hashCode())));
-        System.out.println("----------------------------");
-        System.out.println(usr1);
-        System.out.println(usr2);
-        System.out.println("----------------------------");
-        System.out.println(map.size());
-        System.out.println("----------------------------");
-        System.out.println(usr1.equals(usr2));
+        Map<User, String> map = new HashMap();
+        map.put(usr1, "Best");
+        System.out.println(map.get(usr2).equals("Best"));
+        System.out.println(usr1 == usr2);
+        System.out.println(usr2 == usr2);
+
+
+//        Map<User, Object> map = new HashMap();
+//        map.put(usr1, new Object());
+//        map.put(usr2, new Object());
+//        System.out.println("-------------- hashCode --------------");
+//        System.out.println(usr1.hashCode());
+//        System.out.println(usr2.hashCode());
+//        System.out.println(Objects.equals(usr1.hashCode(), usr2.hashCode()));
+//        System.out.println("-------------- hash --------------");
+//        System.out.println(Objects.hash(usr1.hashCode()));
+//        System.out.println(Objects.hash(usr2.hashCode()));
+//        System.out.println(Objects.equals(Objects.hash(usr1.hashCode()), Objects.hash(usr2.hashCode())));
+//        System.out.println("----------------------------");
+//        System.out.println(usr1);
+//        System.out.println(usr2);
+//        System.out.println("----------------------------");
+//        System.out.println(map.size());
+//        System.out.println("----------------------------");
+//        System.out.println(usr1.equals(usr2));
     }
 }
