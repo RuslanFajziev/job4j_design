@@ -65,10 +65,10 @@ public class ArrayHashTest {
 
         Iterator iterator = arrayHash.iterator();
 
-        assertThat(iterator.next(), is(arrayHash2.get(7)));
-        assertThat(iterator.next(), is(arrayHash2.get(8)));
         assertThat(iterator.next(), is(arrayHash2.get(9)));
         assertThat(iterator.next(), is(arrayHash2.get(10)));
+        assertThat(iterator.next(), is(arrayHash2.get(7)));
+        assertThat(iterator.next(), is(arrayHash2.get(8)));
     }
 
     @Test
@@ -86,9 +86,9 @@ public class ArrayHashTest {
         arrayHash.insert(10, 10);
         assertFalse(arrayHash.insert(10, 10));
         assertFalse(arrayHash.insert(8, 8));
-        assertTrue(arrayHash.insert(1, 888));
-        assertTrue(arrayHash.insert(2, 8));
-        assertThat(arrayHash.size(), is(4));
+        assertTrue(arrayHash.insert(11, 11));
+        assertTrue(arrayHash.insert(12, 12));
+        assertThat(arrayHash.size(), is(12));
     }
 
     @Test(expected = ConcurrentModificationException.class)
@@ -108,12 +108,12 @@ public class ArrayHashTest {
         arrayHash2.insert(9, 9);
 
         Iterator iterator = arrayHash.iterator();
+        assertThat(iterator.next(), is(arrayHash2.get(9)));
         assertThat(iterator.next(), is(arrayHash2.get(7)));
         assertThat(iterator.next(), is(arrayHash2.get(8)));
-        assertThat(iterator.next(), is(arrayHash2.get(9)));
 
         Iterator iterator2 = arrayHash.iterator();
-        assertThat(iterator2.next(), is(arrayHash2.get(7)));
+        assertThat(iterator2.next(), is(arrayHash2.get(9)));
         assertTrue(arrayHash.delete(8));
         iterator2.next();
     }

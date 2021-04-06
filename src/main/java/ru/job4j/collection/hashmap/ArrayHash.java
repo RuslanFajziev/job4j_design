@@ -5,11 +5,12 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayHash<K, V> implements Iterable {
+public class ArrayHash<K, V> implements Iterable<K> {
     private NodeHashMap[] container;
     private int capacity = 10;
     private int count = 0;
     private int modCount = 0;
+    final double fullness = 0.75;
 
     public ArrayHash() {
         this.container = new NodeHashMap[capacity];
@@ -20,17 +21,17 @@ public class ArrayHash<K, V> implements Iterable {
     }
 
     static int indexFor(int h, int length) {
-        return h & (length - 1);
+        return h % length;
     }
 
     public int size() {
         return count;
     }
 
-    public void grow() {
+    private void grow() {
         int capacityGrow = capacity;
         int index;
-        if (((double) count / capacity) >= 0.75) {
+        if (((double) count / capacity) >= fullness) {
             capacityGrow += 10;
             NodeHashMap[] newContainer = new NodeHashMap[capacityGrow];
             for (var elmNode : container) {
@@ -91,8 +92,8 @@ public class ArrayHash<K, V> implements Iterable {
     }
 
     @Override
-    public Iterator<Object> iterator() {
-        return new Iterator<Object>() {
+    public Iterator<K> iterator() {
+        return new Iterator<K>() {
             int head = 0;
             int expectedModCount = modCount;
 
@@ -105,7 +106,7 @@ public class ArrayHash<K, V> implements Iterable {
             }
 
             @Override
-            public Object next() {
+            public K next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
@@ -117,7 +118,7 @@ public class ArrayHash<K, V> implements Iterable {
                     return null;
                 }
                 head++;
-                return nod.getValue();
+                return (K) nod.getValue();
             }
         };
     }
