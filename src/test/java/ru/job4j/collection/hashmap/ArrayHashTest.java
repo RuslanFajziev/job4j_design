@@ -63,12 +63,18 @@ public class ArrayHashTest {
         arrayHash2.insert(9, 9);
         arrayHash2.insert(10, 10);
 
-        Iterator iterator = arrayHash.iterator();
+        Iterator<ArrayHash.NodeHashMap> iterator = arrayHash.iterator();
 
-        assertThat(iterator.next(), is(arrayHash2.get(9)));
-        assertThat(iterator.next(), is(arrayHash2.get(10)));
-        assertThat(iterator.next(), is(arrayHash2.get(7)));
-        assertThat(iterator.next(), is(arrayHash2.get(8)));
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(9)));
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(10)));
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(7)));
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(8)));
     }
 
     @Test
@@ -107,14 +113,32 @@ public class ArrayHashTest {
         arrayHash2.insert(8, 8);
         arrayHash2.insert(9, 9);
 
-        Iterator iterator = arrayHash.iterator();
-        assertThat(iterator.next(), is(arrayHash2.get(9)));
-        assertThat(iterator.next(), is(arrayHash2.get(7)));
-        assertThat(iterator.next(), is(arrayHash2.get(8)));
+        Iterator<ArrayHash.NodeHashMap> iterator = arrayHash.iterator();
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(9)));
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(7)));
+        assertThat(iterator.next().getValue(), is(arrayHash2.get(8)));
 
-        Iterator iterator2 = arrayHash.iterator();
-        assertThat(iterator2.next(), is(arrayHash2.get(9)));
+        Iterator<ArrayHash.NodeHashMap> iterator2 = arrayHash.iterator();
+        assertThat(iterator2.next().getValue(), is(arrayHash2.get(9)));
         assertTrue(arrayHash.delete(8));
         iterator2.next();
+    }
+
+    @Test
+    public void test7() {
+        ArrayHash arrayHash = new ArrayHash();
+        arrayHash.insert(1, 1);
+        arrayHash.insert(2, 2);
+        assertThat(arrayHash.size(), is(2));
+        assertTrue(arrayHash.delete(1));
+        assertThat(arrayHash.size(), is(1));
+        assertFalse(arrayHash.delete(3));
     }
 }

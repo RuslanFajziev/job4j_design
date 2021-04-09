@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayHash<K, V> implements Iterable<K> {
+public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
     private NodeHashMap[] container;
     private int capacity = 10;
     private int count = 0;
@@ -38,7 +38,7 @@ public class ArrayHash<K, V> implements Iterable<K> {
                 if (elmNode == null) {
                     index = 0;
                 } else {
-                    index = indexFor(elmNode.getKey(), capacityGrow);
+                    index = indexFor(elmNode.getHash(), capacityGrow);
                 }
                 newContainer[index] = elmNode;
             }
@@ -50,28 +50,25 @@ public class ArrayHash<K, V> implements Iterable<K> {
     public boolean insert(K key, V value) {
         int h = hash(key.hashCode());
         int index = indexFor(h, capacity);
-        NodeHashMap nodeHashMap = new NodeHashMap(h, value);
+        NodeHashMap newNode = new NodeHashMap(h, key, value);
         NodeHashMap node = container[index];
-        if (node != null && node.getKey() == h) {
-            return false;
-        } else if (node != null && node.getKey() != h) {
-            container[index] = nodeHashMap;
+        if (node == null) {
+            container[index] = newNode;
+            count++;
             modCount++;
+            grow();
             return true;
         }
-        container[index] = nodeHashMap;
-        count++;
-        modCount++;
-        grow();
-        return true;
+        return false;
     }
 
     public boolean delete(K key) {
         int h = hash(key.hashCode());
-        for (int i = 0; i < capacity; i++) {
-            NodeHashMap node = container[i];
-            if (node != null && node.getKey() == h) {
-                container[i] = null;
+        Iterator<ArrayHash.NodeHashMap> iter = iterator();
+        while (iter.hasNext()) {
+            ArrayHash.NodeHashMap node = iter.next();
+            if (node != null && node.getKey().equals(key)) {
+                node = null;
                 count--;
                 modCount++;
                 return true;
@@ -82,9 +79,10 @@ public class ArrayHash<K, V> implements Iterable<K> {
 
     public V get(K key) {
         int h = hash(key.hashCode());
-        for (int i = 0; i < capacity; i++) {
-            NodeHashMap node = container[i];
-            if (node != null && node.getKey() == h) {
+        Iterator<ArrayHash.NodeHashMap> iter = iterator();
+        while (iter.hasNext()) {
+            ArrayHash.NodeHashMap node = iter.next();
+            if (node != null && node.getKey().equals(key)) {
                 return (V) node.getValue();
             }
         }
@@ -92,8 +90,8 @@ public class ArrayHash<K, V> implements Iterable<K> {
     }
 
     @Override
-    public Iterator<K> iterator() {
-        return new Iterator<K>() {
+    public Iterator<ArrayHash.NodeHashMap> iterator() {
+        return new Iterator<ArrayHash.NodeHashMap>() {
             int head = 0;
             int expectedModCount = modCount;
 
@@ -102,42 +100,40 @@ public class ArrayHash<K, V> implements Iterable<K> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return head < capacity;
+                return count > 0 && head < capacity;
             }
 
             @Override
-            public K next() {
+            public ArrayHash.NodeHashMap next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                while (container[head] == null) {
-                    head++;
-                }
-                NodeHashMap nod = container[head];
-                if (nod == null) {
-                    return null;
-                }
-                head++;
-                return (K) nod.getValue();
+                return (ArrayHash.NodeHashMap) container[head++];
             }
         };
     }
 
-    private static class NodeHashMap<V> {
-        private int key;
+    protected static class NodeHashMap<K, V> {
+        private int hash;
+        private K key;
         private V value;
 
-        public NodeHashMap(int key, V value) {
+        public NodeHashMap(int hash, K key, V value) {
+            this.hash = hash;
             this.key = key;
             this.value = value;
         }
 
-        public int getKey() {
-            return key;
+        public int getHash() {
+            return hash;
         }
 
         public V getValue() {
             return value;
+        }
+
+        public K getKey() {
+            return key;
         }
 
         @Override
@@ -148,13 +144,13 @@ public class ArrayHash<K, V> implements Iterable<K> {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
-            NodeHashMap<?> that = (NodeHashMap<?>) o;
-            return key == that.key && value.equals(that.value);
+            NodeHashMap<?, ?> that = (NodeHashMap<?, ?>) o;
+            return hash == that.hash && key.equals(that.key) && value.equals(that.value);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(key, value);
+            return Objects.hash(hash, key, value);
         }
     }
 }
