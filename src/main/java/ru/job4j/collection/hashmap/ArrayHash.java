@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
+public class ArrayHash<K, V> implements Iterable<K> {
     private NodeHashMap[] container;
     private int capacity = 10;
     private int count = 0;
@@ -86,8 +86,8 @@ public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
     }
 
     @Override
-    public Iterator<ArrayHash.NodeHashMap> iterator() {
-        return new Iterator<ArrayHash.NodeHashMap>() {
+    public Iterator<K> iterator() {
+        return new Iterator<K>() {
             int head = 0;
             int expectedModCount = modCount;
 
@@ -103,11 +103,11 @@ public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
             }
 
             @Override
-            public ArrayHash.NodeHashMap next() {
+            public K next() {
                 if (head >= capacity && !hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return container[head++];
+                return (K) container[head++];
             }
         };
     }
