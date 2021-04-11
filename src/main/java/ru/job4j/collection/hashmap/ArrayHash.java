@@ -64,27 +64,23 @@ public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
 
     public boolean delete(K key) {
         int h = hash(key.hashCode());
-        Iterator<ArrayHash.NodeHashMap> iter = iterator();
-        while (iter.hasNext()) {
-            ArrayHash.NodeHashMap node = iter.next();
-            if (node != null && node.getKey().equals(key)) {
-                node = null;
-                count--;
-                modCount++;
-                return true;
-            }
+        int index = indexFor(h, capacity);
+        ArrayHash.NodeHashMap node = container[index];
+        if (node != null && node.getHash() == h && node.getKey().equals(key)) {
+            container[index] = null;
+            count--;
+            modCount++;
+            return true;
         }
         return false;
     }
 
     public V get(K key) {
         int h = hash(key.hashCode());
-        Iterator<ArrayHash.NodeHashMap> iter = iterator();
-        while (iter.hasNext()) {
-            ArrayHash.NodeHashMap node = iter.next();
-            if (node != null && node.getKey().equals(key)) {
-                return (V) node.getValue();
-            }
+        int index = indexFor(h, capacity);
+        ArrayHash.NodeHashMap node = container[index];
+        if (node != null && node.getHash() == h && node.getKey().equals(key)) {
+            return (V) node.getValue();
         }
         return null;
     }
@@ -100,15 +96,18 @@ public class ArrayHash<K, V> implements Iterable<ArrayHash.NodeHashMap> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return count > 0 && head < capacity;
+                while (head < capacity && container[head] == null) {
+                    head++;
+                }
+                return head < capacity && container[head] != null;
             }
 
             @Override
             public ArrayHash.NodeHashMap next() {
-                if (!hasNext()) {
+                if (head >= capacity && !hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (ArrayHash.NodeHashMap) container[head++];
+                return container[head++];
             }
         };
     }
