@@ -38,11 +38,10 @@ class SimpleTree<E> implements Tree<E> {
         Optional<Node<E>> rslParent = findBy(parent);
         if (rslParent.isPresent()) {
             List<Node<E>> childLst = rslParent.get().children;
-            if (childLst.contains(node)) {
-                return false;
+            if (findBy(child).isEmpty()) {
+                childLst.add(node);
+                return true;
             }
-            childLst.add(node);
-            return true;
         }
         return false;
     }
