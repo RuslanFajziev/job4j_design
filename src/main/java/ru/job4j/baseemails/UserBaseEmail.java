@@ -1,8 +1,6 @@
 package ru.job4j.baseemails;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class UserBaseEmail {
     private List<UserEmail> lstUser = new ArrayList<UserEmail>();
@@ -34,20 +32,23 @@ public class UserBaseEmail {
         }
     }
 
-    public boolean check(List left, List right) {
-        for (int index = 0; index < left.size(); index++) {
-            if (right.contains(left.get(index))) {
+    public boolean check(List<String> left, List<String> right) {
+        Iterator iterator = left.iterator();
+        while (iterator.hasNext()) {
+            String elmMail = (String) iterator.next();
+            if (right.contains(elmMail)) {
                 return true;
             }
         }
         return false;
     }
 
-    public List unite(List left, List right) {
-        List newLst = new ArrayList();
+    public List<String> unite(List<String> left, List<String> right) {
+        List<String> newLst = new ArrayList();
         newLst.addAll(left);
-        for (int index = 0; index < right.size(); index++) {
-            var elmMail = right.get(index);
+        Iterator iterator = right.iterator();
+        while (iterator.hasNext()) {
+            String elmMail = (String) iterator.next();
             if (!left.contains(elmMail)) {
                 newLst.add(elmMail);
             }
@@ -59,8 +60,8 @@ public class UserBaseEmail {
         for (int cicle = 0; cicle < lstUser.size() - 1; cicle++) {
             int i = cicle;
             for (int index = i + 1; index < lstUser.size(); index++) {
-                List lstMailLeft = (List) lstUser.get(i).getEmail();
-                List lstMailRight = (List) lstUser.get(index).getEmail();
+                List<String> lstMailLeft = (List) lstUser.get(i).getEmail();
+                List<String> lstMailRight = (List) lstUser.get(index).getEmail();
                 if (check(lstMailLeft, lstMailRight)) {
                     lstUser.get(i).setEmail(unite(lstMailLeft, lstMailRight));
                     lstUser.remove(index--);
