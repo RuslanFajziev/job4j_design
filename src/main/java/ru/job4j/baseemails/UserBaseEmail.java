@@ -33,26 +33,21 @@ public class UserBaseEmail {
     }
 
     public boolean check(List<String> left, List<String> right) {
-        Iterator iterator = left.iterator();
-        while (iterator.hasNext()) {
-            String elmMail = (String) iterator.next();
-            if (right.contains(elmMail)) {
-                return true;
-            }
+        Set<String> set = new HashSet<>();
+        set.addAll(left);
+        set.addAll(right);
+        if (set.size() != left.size() + right.size()) {
+            return true;
         }
         return false;
     }
 
     public List<String> unite(List<String> left, List<String> right) {
+        Set<String> set = new HashSet<>();
         List<String> newLst = new ArrayList();
-        newLst.addAll(left);
-        Iterator iterator = right.iterator();
-        while (iterator.hasNext()) {
-            String elmMail = (String) iterator.next();
-            if (!left.contains(elmMail)) {
-                newLst.add(elmMail);
-            }
-        }
+        set.addAll(left);
+        set.addAll(right);
+        newLst.addAll(set);
         return newLst;
     }
 

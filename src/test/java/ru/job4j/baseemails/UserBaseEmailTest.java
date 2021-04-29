@@ -86,9 +86,9 @@ public class UserBaseEmailTest {
         usrBsEm.add(usr8);
         usrBsEm.compression();
         UserBaseEmail usrBsEm2 = new UserBaseEmail();
-        UserEmail<String, List<String>> usr10 = new UserEmail<>("name1", List.of("ivanov@mail.ru", "petrov@ya.ru", "kazlov@ya.ru", "chibis@mail.ru"));
-        UserEmail<String, List<String>> usr11 = new UserEmail<>("name2", List.of("pupkin@mail.ru", "sidorov@ya.ru", "zorro@ya.ru"));
-        UserEmail<String, List<String>> usr12 = new UserEmail<>("name6", List.of("putin@mail.ru", "null@ya.ru", "medvedev@mail.ru", "solovev@mail.ru"));
+        UserEmail<String, List<String>> usr10 = new UserEmail<>("name1", List.of("petrov@ya.ru", "chibis@mail.ru", "kazlov@ya.ru", "ivanov@mail.ru"));
+        UserEmail<String, List<String>> usr11 = new UserEmail<>("name2", List.of("zorro@ya.ru", "sidorov@ya.ru", "pupkin@mail.ru"));
+        UserEmail<String, List<String>> usr12 = new UserEmail<>("name6", List.of("null@ya.ru", "putin@mail.ru", "medvedev@mail.ru", "solovev@mail.ru"));
         usrBsEm2.add(usr10);
         usrBsEm2.add(usr11);
         usrBsEm2.add(usr12);
