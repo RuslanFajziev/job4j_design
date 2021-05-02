@@ -82,4 +82,26 @@ public class AnalizeTest {
         analize2.info.setAdded(3);
         assertThat(info, is(analize2.info));
     }
+
+    @Test
+    public void test8() {
+        Analize.User usr1Changed = new Analize.User(1, "почти один");
+        Analize analize = new Analize();
+        var info = analize.diff(List.of(usr1, usr2), List.of(usr1Changed, usr2));
+        Analize analize2 = new Analize();
+        analize2.info.setChanged(1);
+        assertThat(info, is(analize2.info));
+    }
+
+    @Test
+    public void test9() {
+        Analize.User usr2Changed = new Analize.User(2, "почти два");
+        Analize analize = new Analize();
+        var info = analize.diff(List.of(usr1, usr2, usr3), List.of(usr4, usr2Changed, usr6));
+        Analize analize2 = new Analize();
+        analize2.info.setDeleted(2);
+        analize2.info.setAdded(2);
+        analize2.info.setChanged(1);
+        assertThat(info, is(analize2.info));
+    }
 }
