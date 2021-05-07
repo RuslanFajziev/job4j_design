@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
 import org.junit.Test;
-
-import java.io.FileNotFoundException;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
