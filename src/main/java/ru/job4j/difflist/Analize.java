@@ -1,18 +1,21 @@
 package ru.job4j.difflist;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Analize {
     Info info = new Info();
 
     public Info diff(List<User> previous, List<User> current) {
+        Map<Integer, User> currentMapUser = new HashMap<>();
+        for (User elm : current) {
+            currentMapUser.put(elm.id, elm);
+        }
         int prevSize = previous.size();
         int currSize = current.size();
         int repet = Math.min(prevSize, currSize);
         int start = 1;
         for (User elmPrev : previous) {
-            int statusElm = cycle(current, elmPrev);
+            int statusElm = cycle(currentMapUser, elmPrev);
             if (statusElm == 1) {
                 start++;
                 continue;
@@ -39,20 +42,17 @@ public class Analize {
         }
     }
 
-    public int cycle(List<User> current, User elmPrev) {
+    public int cycle(Map<Integer, User> currentMapUser, User elmPrev) {
         /**
          * Проверяем есть ли элемент в колекции
          * 1 - есть обсолютно такойже
          * 2 - есть с таким же ID, но name другой
          * 0 - элемент отстуствует
          */
-        for (User elmCurr : current) {
-            if (elmCurr.equals(elmPrev)) {
-                return 1;
-            } else if (elmCurr.id == elmPrev.id) {
-                return 2;
-            }
-            continue;
+        if (currentMapUser.containsKey(elmPrev.id) && currentMapUser.get(elmPrev.id).equals(elmPrev)) {
+            return 1;
+        } else if (currentMapUser.containsKey(elmPrev.id)) {
+            return 2;
         }
         return 0;
     }
