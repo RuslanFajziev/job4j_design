@@ -9,13 +9,13 @@ public class Analizy {
     public void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-                String serverStatus = null;
+                String serverStatus = "not_defined";
                 while (in.ready()) {
                     String lineStatus = in.readLine();
-                    if ((serverStatus == null || serverStatus.equals("Up")) && (lineStatus.contains("400") || lineStatus.contains("500"))) {
+                    if ((serverStatus == "not_defined" || serverStatus.equals("Up")) && (lineStatus.contains("400") || lineStatus.contains("500"))) {
                         out.println("Down " + lineStatus.substring(4));
                         serverStatus = "Down";
-                    } else if ((serverStatus == null || serverStatus.equals("Down")) && (lineStatus.contains("200"))) {
+                    } else if ((serverStatus == "not_defined" || serverStatus.equals("Down")) && (lineStatus.contains("200"))) {
                         out.println("Up " + lineStatus.substring(4));
                         serverStatus = "Up";
                     }
