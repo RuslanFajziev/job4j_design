@@ -10,36 +10,21 @@ public class Analize {
         for (User elm : current) {
             currentMapUser.put(elm.id, elm);
         }
-        int prevSize = previous.size();
-        int currSize = current.size();
-        int repet = Math.min(prevSize, currSize);
-        int start = 1;
         for (User elmPrev : previous) {
             int statusElm = cycle(currentMapUser, elmPrev);
             if (statusElm == 1) {
-                start++;
-                continue;
+                currentMapUser.remove(elmPrev.id);
+            } else if (statusElm == 2) {
+                info.plusChanged();
+                currentMapUser.remove(elmPrev.id);
+            } else if (statusElm == 0) {
+                info.plusDeleted();
             }
-            if (start <= repet) {
-                check(prevSize, currSize, statusElm);
-            }
-            start++;
         }
-        if (prevSize > currSize) {
-            info.deleted += prevSize - currSize;
-        } else if (prevSize < currSize) {
-            info.added += currSize - prevSize;
+        for (int i = 1; i <= currentMapUser.size(); i++) {
+            info.plusAdded();
         }
         return info;
-    }
-
-    public void check(int prevSize, int currSize, int statusElm) {
-        if (statusElm == 0) {
-            info.plusDeleted();
-            info.plusAdded();
-        } else if (statusElm == 2) {
-            info.plusChanged();
-        }
     }
 
     public int cycle(Map<Integer, User> currentMapUser, User elmPrev) {
