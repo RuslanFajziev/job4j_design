@@ -34,7 +34,7 @@ public class AnalizyTest {
         String source = "src\\main\\resources\\source_2.csv";
         String target = "src\\main\\resources\\target_2.csv";
         analizy.unavailable(source, target);
-        String[] right = "Up 10:57:01;Down 10:58:01;Up 10:59:01;Down 11:01:02;Up 22:02:02".split(";");
+        String[] right = "Down 10:58:01;Up 10:59:01;Down 11:01:02;Up 22:02:02".split(";");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
         List<String> lst = bufferedReader.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
         Iterator<String> iter = lst.listIterator();
@@ -50,11 +50,8 @@ public class AnalizyTest {
         String source = "src\\main\\resources\\source_3.csv";
         String target = "src\\main\\resources\\target_3.csv";
         analizy.unavailable(source, target);
-        String right = "Up 10:57:01";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
-        List<String> lst = bufferedReader.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
-        Iterator<String> iter = lst.listIterator();
-        assertEquals(iter.next(), right);
+        assertEquals(bufferedReader.lines().filter(x -> x.length() > 0).count(), 0);
     }
 
     @Test
