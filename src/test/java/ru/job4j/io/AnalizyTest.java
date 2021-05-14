@@ -92,14 +92,16 @@ public class AnalizyTest {
             out.println("Up 11:02:02");
         }
         analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
-        BufferedReader readTarget = new BufferedReader(new FileReader(target));
-        BufferedReader readDiff = new BufferedReader(new FileReader(diff));
-        List<String> lstTarget = readTarget.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
-        List<String> lstDiff = readDiff.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
-        Iterator<String> iterTarget = lstTarget.listIterator();
-        Iterator<String> iterDiff = lstDiff.listIterator();
-        while (iterTarget.hasNext()) {
-            assertEquals(iterTarget.next(), iterDiff.next());
+        try (BufferedReader readTarget = new BufferedReader(new FileReader(target))) {
+            try (BufferedReader readDiff = new BufferedReader(new FileReader(diff))) {
+                List<String> lstTarget = readTarget.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
+                List<String> lstDiff = readDiff.lines().filter(x -> x.length() > 0).collect(Collectors.toList());
+                Iterator<String> iterTarget = lstTarget.listIterator();
+                Iterator<String> iterDiff = lstDiff.listIterator();
+                while (iterTarget.hasNext()) {
+                    assertEquals(iterTarget.next(), iterDiff.next());
+                }
+            }
         }
     }
 }
