@@ -51,6 +51,10 @@ public class ConsoleChat {
         lstLog.add("-------------------------------------------------------");
         lstLog.add("Завершение сеанса чата");
         lstLog.add("-------------------------------------------------------");
+        wrightLog(lstLog);
+    }
+
+    public void wrightLog(List<String> lstLog) {
         try (BufferedWriter out = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251"), true))) {
             for (var line : lstLog) {
                 out.write(line);
@@ -63,7 +67,8 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) throws IOException {
-        ConsoleChat cc = new ConsoleChat("c:\\projects\\job4j_design\\src\\main\\resources\\ConsoleChat.log", "c:\\projects\\job4j_design\\src\\main\\resources\\RundomText.txt");
+        ConsoleChat cc = new ConsoleChat("\\projects\\job4j_design\\src\\main\\resources\\ConsoleChat.log",
+                "\\projects\\job4j_design\\src\\main\\resources\\RundomText.txt");
         cc.run();
     }
 }
