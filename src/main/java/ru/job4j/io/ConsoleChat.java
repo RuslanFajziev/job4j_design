@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ConsoleChat {
     private final String path;
     private final String botAnswers;
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -62,7 +66,8 @@ public class ConsoleChat {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            LOG.error("Error opening file to write", e);
         }
     }
 
