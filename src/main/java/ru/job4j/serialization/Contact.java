@@ -35,7 +35,7 @@ public class Contact implements Serializable {
 
         /* Запись объекта в файл */
 //        File tempFile = Files.createTempFile(null, null).toFile();
-        File tempFile = Files.createFile(Path.of("\\projects\\job4j_design\\src\\main\\resources\\ContactObject")).toFile();
+        File tempFile = Files.createFile(Path.of("./src/main/resources/ContactObject")).toFile();
         try (FileOutputStream fos = new FileOutputStream(tempFile);
              ObjectOutputStream oos =
                      new ObjectOutputStream(fos)) {
