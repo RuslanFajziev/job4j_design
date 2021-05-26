@@ -38,6 +38,30 @@ public class PC {
                 + '}';
     }
 
+    public boolean isGamingPc() {
+        return gamingPc;
+    }
+
+    public boolean isWaterColl() {
+        return waterColl;
+    }
+
+    public int getGuaranteePeriod() {
+        return guaranteePeriod;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public MB getMb() {
+        return mb;
+    }
+
+    public String[] getCpuType() {
+        return cpuType;
+    }
+
     public static void main(String[] args) throws IOException {
         final PC pc = new PC(true, true, 36, "Sitylinke",
                 new MB(false, 32, "LGA 2066"), "Pentium", "Celeron");
@@ -65,26 +89,5 @@ public class PC {
         final PC pcFromJson = gson.fromJson(in, PC.class);
         System.out.println(pcFromJson);
         System.out.println("---------------------");
-    }
-}
-
-class MB {
-    private final boolean serverBoard;
-    private final int maxRamSize;
-    private final String socket;
-
-    public MB(boolean serverBoard, int maxRamSize, String socket) {
-        this.serverBoard = serverBoard;
-        this.maxRamSize = maxRamSize;
-        this.socket = socket;
-    }
-
-    @Override
-    public String toString() {
-        return "MB{"
-                + "serverBoard=" + serverBoard
-                + ", maxRamSize=" + maxRamSize
-                + ", socket='" + socket + '\''
-                + '}';
     }
 }
