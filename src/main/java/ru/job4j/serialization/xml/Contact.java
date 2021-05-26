@@ -1,12 +1,11 @@
 package ru.job4j.serialization.xml;
 
 import com.sun.xml.txw2.annotation.XmlElement;
-
 import javax.xml.bind.annotation.XmlAttribute;
+
 
 @XmlElement(value = "contact")
 public class Contact {
-
     @XmlAttribute
     private String phone;
 
@@ -16,6 +15,10 @@ public class Contact {
 
     public Contact(String phone) {
         this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     @Override

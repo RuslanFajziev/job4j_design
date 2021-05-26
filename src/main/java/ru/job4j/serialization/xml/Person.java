@@ -41,6 +41,22 @@ public class Person {
                 + '}';
     }
 
+    public boolean isSex() {
+        return sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getStatuses() {
+        return statuses;
+    }
+
     public static void main(String[] args) throws Exception {
         Person person = new Person(false, 30, new Contact("11-111"), "Worker", "Married");
         // Получаем контекст для доступа к АПИ
