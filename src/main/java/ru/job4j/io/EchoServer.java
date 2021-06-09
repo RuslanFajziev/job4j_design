@@ -5,6 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
+    /**
+     *  curl -i http://localhost:9000/?msg=Hello
+     */
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
@@ -16,7 +19,8 @@ public class EchoServer {
                     while (!str.isEmpty()) {
                         System.out.println(str);
                         if (str.contains("msg=Exit")) {
-                            out.write("HTTP/1.1 200 OK\r\n".getBytes());
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Bye Bye Bye......\r\n\r\n".getBytes());
                             server.close();
                             break;
                         }
