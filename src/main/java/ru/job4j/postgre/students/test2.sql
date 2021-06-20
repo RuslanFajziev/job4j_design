@@ -40,7 +40,7 @@ select min(mark) from studentsMY_subjects;
 select max(mark) from studentsMY_subjects;
 
 select s.name, avg(ss.mark) from studentsMY_subjects as ss join subjects s on ss.subject_id = s.id
-group by s.name
+group by s.name;
 having avg(ss.mark) > 4.5;
 
 select s.name, avg(ss.mark) from studentsMY_subjects as ss join studentsMY s on ss.student_id = s.id
