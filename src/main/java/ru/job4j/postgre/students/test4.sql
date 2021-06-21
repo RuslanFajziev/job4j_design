@@ -41,7 +41,7 @@ GROUP BY tp.name;
 -- 6 --
 select * from product where type_id in (select id from type where name = 'Сыр' or name = 'Молоко');
 -- 7 --
-select quantity.name, quantity.count from(select tp.name, count(*) from product as pr
+select quantity.name, quantity.count from (select tp.name, count(*) from product as pr
 join type as tp on tp.id = pr.type_id
 GROUP BY tp.name) as quantity where quantity.count < 10;
 
