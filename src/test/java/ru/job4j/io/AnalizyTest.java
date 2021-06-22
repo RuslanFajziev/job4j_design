@@ -19,8 +19,8 @@ public class AnalizyTest {
     @Test
     public void test() throws FileNotFoundException {
         Analizy analizy = new Analizy();
-        String source = "src\\main\\resources\\source_1.csv";
-        String target = "src\\main\\resources\\target_1.csv";
+        String source = "./src/main/resources/source_1.csv";
+        String target = "./src/main/resources/target_1.csv";
         analizy.unavailable(source, target);
         String[] right = "Down 10:58:01;Up 10:59:01;Down 11:01:02;Up 11:02:02".split(";");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
@@ -35,8 +35,8 @@ public class AnalizyTest {
     @Test
     public void test2() throws FileNotFoundException {
         Analizy analizy = new Analizy();
-        String source = "src\\main\\resources\\source_2.csv";
-        String target = "src\\main\\resources\\target_2.csv";
+        String source = "./src/main/resources/source_2.csv";
+        String target = "./src/main/resources/target_2.csv";
         analizy.unavailable(source, target);
         String[] right = "Down 10:58:01;Up 10:59:01;Down 11:01:02;Up 22:02:02".split(";");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
@@ -51,8 +51,8 @@ public class AnalizyTest {
     @Test
     public void test3() throws FileNotFoundException {
         Analizy analizy = new Analizy();
-        String source = "src\\main\\resources\\source_3.csv";
-        String target = "src\\main\\resources\\target_3.csv";
+        String source = "./src/main/resources/source_3.csv";
+        String target = "./src/main/resources/target_3.csv";
         analizy.unavailable(source, target);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
         assertEquals(bufferedReader.lines().filter(x -> x.length() > 0).count(), 0);
@@ -61,8 +61,8 @@ public class AnalizyTest {
     @Test
     public void test4() throws FileNotFoundException {
         Analizy analizy = new Analizy();
-        String source = "src\\main\\resources\\source_4.csv";
-        String target = "src\\main\\resources\\target_4.csv";
+        String source = "./src/main/resources/source_4.csv";
+        String target = "./src/main/resources/target_4.csv";
         analizy.unavailable(source, target);
         String right = "Down 10:58:01";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(target));
