@@ -1,0 +1,8 @@
+name
+education
+ruslan
+higher education
+boris
+secondary education
+petr
+higher education
