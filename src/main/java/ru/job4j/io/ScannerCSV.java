@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,37 +40,15 @@ public class ScannerCSV {
         return scannerCsv;
     }
 
-    public void readerCSV() throws Exception {
-        var filePath = values.get("path");
-        var delimiter = values.get("delimiter");
-        var out = values.get("out");
-        var filter = values.get("filter");
-        var fileTxt = Files.readString(Path.of(filePath));
-        var scanner = new Scanner(fileTxt);
-        String headingsAllLine = scanner.next(); // Строка названия столбцов
-        String[] headings = headingsAllLine.split(";"); // Массив названий столбцов
-        int lensHeadings = headings.length; // Длинна массива названий столбцов
-        List<String> filterHeadings = new ArrayList<>();
-        var scannerFilter = new Scanner(filter).useDelimiter(",");
-        while (scannerFilter.hasNext()) {
-            filterHeadings.add(scannerFilter.next());
-        }
+    public void outFilterCSV(String fileTxt, List<Integer> listIndexWord, String out, String delimiter, int lensHeadings) throws IOException {
         int counter = 1;
-        List<Integer> listIndexWord = new ArrayList<>(); // Массив индексов, по каторым будем будем понимать что слово необходимо вывести в файл/консоль
-        for (var elm : headings) {
-            if (filterHeadings.contains(elm)) {
-                listIndexWord.add(counter);
-            }
-            counter++;
-        }
-        counter = 1;
         var scannerNew = new Scanner(fileTxt).useDelimiter(delimiter);
         if (out.equals("stdout")) {
             while (scannerNew.hasNext()) {
                 String txtOut = scannerNew.next();
                 if (listIndexWord.contains(counter)) {
                     listIndexWord.add(counter + lensHeadings);
-                    System.out.println(txtOut.replace("\r\n", ""));
+                    System.out.println(txtOut.replace(System.lineSeparator(), ""));
                 }
                 counter++;
             }
@@ -87,9 +66,35 @@ public class ScannerCSV {
         }
     }
 
+    public void readerCSV() throws Exception {
+        var filePath = values.get("path");
+        var delimiter = values.get("delimiter");
+        var out = values.get("out");
+        var filter = values.get("filter");
+        var fileTxt = Files.readString(Path.of(filePath));
+        var scanner = new Scanner(fileTxt);
+        String headingsAllLine = scanner.next(); // Строка названия столбцов
+        String[] headings = headingsAllLine.split(delimiter); // Массив названий столбцов
+        int lensHeadings = headings.length; // Длинна массива названий столбцов
+        Set<String> filterHeadings = new HashSet<>();
+        var scannerFilter = new Scanner(filter).useDelimiter(",");
+        while (scannerFilter.hasNext()) {
+            filterHeadings.add(scannerFilter.next());
+        }
+        int counter = 1;
+        List<Integer> listIndexWord = new ArrayList<>(); // Массив индексов, по каторым будем будем понимать что слово необходимо вывести в файл/консоль
+        for (var elm : headings) {
+            if (filterHeadings.contains(elm)) {
+                listIndexWord.add(counter);
+            }
+            counter++;
+        }
+        outFilterCSV(fileTxt, listIndexWord, out, delimiter, lensHeadings);
+    }
+
     public static void main(String[] args) throws Exception {
-        ScannerCSV scannerCsv = ScannerCSV.of(new String[]{"-path=src\\main\\resources\\7.csv", "-delimiter=;", "-out=src\\main\\resources\\7_out.txt", "-filter=name,education"});
-//        ScannerCSV scannerCsv = ScannerCSV.of(new String[]{"-path=src\\main\\resources\\7.csv", "-delimiter=;", "-out=stdout", "-filter=name,education"});
+//        ScannerCSV scannerCsv = ScannerCSV.of(new String[]{"-path=src\\main\\resources\\7.csv", "-delimiter=;", "-out=src\\main\\resources\\7_out.txt", "-filter=name,education"});
+        ScannerCSV scannerCsv = ScannerCSV.of(new String[]{"-path=src\\main\\resources\\7.csv", "-delimiter=;", "-out=stdout", "-filter=name,education"});
         scannerCsv.readerCSV();
     }
 }
