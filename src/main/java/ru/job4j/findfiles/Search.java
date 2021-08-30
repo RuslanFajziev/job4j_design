@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class Search {
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Specify two startup options. First path, second file extension. Usage java -jar search.jar PATH_FILES FILE EXTENSION.");
+            throw new IllegalArgumentException("Specify two startup options. First path, second file extension. Usage java -jar search.jar PATH_FILES FILE_EXTENSION.");
         }
         Path start = Paths.get(args[0]);
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);

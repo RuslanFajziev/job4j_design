@@ -61,7 +61,7 @@ public class ScannerCSV {
                 if (out.equals("stdout")) {
                     counter = cycleScaner(scannerNew, listIndexWord, lensHeadings, out, counter);
                 } else {
-                        counter = cycleScaner(scannerNew, listIndexWord, lensHeadings, out, counter);
+                    counter = cycleScaner(scannerNew, listIndexWord, lensHeadings, out, counter);
                 }
             }
         }
