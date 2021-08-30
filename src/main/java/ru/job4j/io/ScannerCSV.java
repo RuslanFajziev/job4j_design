@@ -11,7 +11,6 @@ public class ScannerCSV {
     }
 
     private void parse(String[] args) {
-        /* TODO parse args to values. */
         for (var elmArgs : args) {
             String[] arrString = elmArgs.split("=");
             if (arrString.length == 1) {
@@ -25,7 +24,6 @@ public class ScannerCSV {
     }
 
     public static ScannerCSV of(String[] args) {
-        /* TODO parse args to values. */
         if (args.length == 0) {
             throw new IllegalArgumentException("(Stage_1) Empty parameter list!");
         } else if (args.length != 4) {
@@ -36,6 +34,24 @@ public class ScannerCSV {
         return scannerCsv;
     }
 
+    public int cycleScaner(Scanner scannerNew, List<Integer> listIndexWord, int lensHeadings, String out, int counter) throws IOException {
+        while (scannerNew.hasNext()) {
+            String txtOut = scannerNew.next();
+            if (listIndexWord.contains(counter)) {
+                listIndexWord.add(counter + lensHeadings);
+                if (out.equals("stdout")) {
+                    System.out.println(txtOut);
+                } else {
+                    try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(out, true)))) {
+                        pw.println(txtOut);
+                    }
+                }
+            }
+            counter++;
+        }
+        return counter;
+    }
+
     public void outFilterCSV(List<Integer> listIndexWord, String out, String delimiter, int lensHeadings, String filePath) throws IOException {
         int counter = 1;
         try (BufferedReader in = new BufferedReader(new FileReader(filePath))) {
@@ -43,25 +59,9 @@ public class ScannerCSV {
             while ((txt = in.readLine()) != null) {
                 var scannerNew = new Scanner(txt).useDelimiter(delimiter);
                 if (out.equals("stdout")) {
-                    while (scannerNew.hasNext()) {
-                        String txtOut = scannerNew.next();
-                        if (listIndexWord.contains(counter)) {
-                            listIndexWord.add(counter + lensHeadings);
-                            System.out.println(txtOut);
-                        }
-                        counter++;
-                    }
+                    counter = cycleScaner(scannerNew, listIndexWord, lensHeadings, out, counter);
                 } else {
-                    try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(out, true)))) {
-                        while (scannerNew.hasNext()) {
-                            String txtOut = scannerNew.next();
-                            if (listIndexWord.contains(counter)) {
-                                listIndexWord.add(counter + lensHeadings);
-                                pw.println(txtOut);
-                            }
-                            counter++;
-                        }
-                    }
+                        counter = cycleScaner(scannerNew, listIndexWord, lensHeadings, out, counter);
                 }
             }
         }
@@ -76,16 +76,16 @@ public class ScannerCSV {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             Optional<String> rsl = bufferedReader.lines().findFirst();
             if (rsl.isPresent()) {
-                String headingsAllLine = rsl.get();  // Строка названия столбцов
-                String[] headings = headingsAllLine.split(delimiter); // Массив названий столбцов
-                int lensHeadings = headings.length; // Длинна массива названий столбцов
+                String headingsAllLine = rsl.get();
+                String[] headings = headingsAllLine.split(delimiter);
+                int lensHeadings = headings.length;
                 Set<String> filterHeadings = new HashSet<>();
                 String[] filterArr = filter.split(",");
                 for (var elmArr : filterArr) {
                     filterHeadings.add(elmArr);
                 }
                 int counter = 1;
-                List<Integer> listIndexWord = new ArrayList<>(); // Массив индексов, по каторым будем будем понимать что слово необходимо вывести в файл/консоль
+                List<Integer> listIndexWord = new ArrayList<>();
                 for (var elm : headings) {
                     if (filterHeadings.contains(elm)) {
                         listIndexWord.add(counter);
