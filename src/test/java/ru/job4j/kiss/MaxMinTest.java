@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class MaxMinTest {
     private List<Integer> listInt = List.of(1, 2, 5, 4, 3, 6, 7, 9, 10, 8);
-    private List<String> listStr = List.of("a", "aa", "bbb");
+    private List<String> listStr = List.of("a", "dddd", "bb", "ccc");
     MaxMin maxMin = new MaxMin();
 
     @Test
@@ -31,7 +31,7 @@ public class MaxMinTest {
     public void testMaxStr() {
         Comparator<String> comparatorMaxStr = (x, y) -> Integer.compare(x.length(), y.length());
         String maxStr = maxMin.max(listStr, comparatorMaxStr);
-        assertThat("bbb", is(maxStr));
+        assertThat("dddd", is(maxStr));
     }
 
     @Test
