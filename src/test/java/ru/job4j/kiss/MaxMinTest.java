@@ -22,7 +22,7 @@ public class MaxMinTest {
 
     @Test
     public void testMinInt() {
-        Comparator<Integer> comparatorMinInt = (x, y) -> Integer.compare(y, x);
+        Comparator<Integer> comparatorMinInt = (x, y) -> Integer.compare(x, y);
         int minElm = maxMin.min(listInt, comparatorMinInt);
         assertThat(1, is(minElm));
     }
@@ -36,7 +36,7 @@ public class MaxMinTest {
 
     @Test
     public void testMinStr() {
-        Comparator<String> comparatorMinStr = (x, y) -> Integer.compare(y.length(), x.length());
+        Comparator<String> comparatorMinStr = (x, y) -> Integer.compare(x.length(), y.length());
         String minStr = maxMin.min(listStr, comparatorMinStr);
         assertThat("a", is(minStr));
     }
