@@ -27,8 +27,19 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
+        Ticket ticket = cinema.buy(account, -1, -1, date);
+        assertThat(ticket, is(new Ticket3D()));
+    }
+
+    @Test(expected = Exception.class)
+    public void buyErrTicket2() {
+        Account account = new AccountCinema();
+        Account account2 = new AccountCinema();
+        Cinema cinema = new Cinema3D();
+        Calendar date = Calendar.getInstance();
+        date.set(2020, 10, 10, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
-        ticket = cinema.buy(account, 1, 1, date);
+        Ticket ticket2 = cinema.buy(account2, 1, 1, date);
     }
 
     @Test(expected = Exception.class)
