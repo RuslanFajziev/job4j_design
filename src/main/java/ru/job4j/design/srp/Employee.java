@@ -2,7 +2,7 @@ package ru.job4j.design.srp;
 
 import java.util.Calendar;
 
-public class Employee extends EmployeeBase{
+public class Employee extends EmployeeBase {
     private String typeSalary;
 
     public Employee(String name, Calendar hired, Calendar fired, int salary, String typeSalary) {
