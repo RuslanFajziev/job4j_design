@@ -1,5 +1,7 @@
 package ru.job4j.postgre.mail;
 
+import org.junit.Ignore;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@Ignore
 public class ImportDB {
 
     private Properties cfg;

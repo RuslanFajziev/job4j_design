@@ -95,8 +95,11 @@ public class ReportEngineTest {
         Predicate<Employee> predicate = em -> em.getSalary() >= 98;
         String left = "d:\\test\\left.html";
         String right = "d:\\test\\right.html";
-        ExportReportToHTML.exportToHTML(engine.generateForHR(predicate), left);
-        ExportReportToHTML.exportToHTML(expect.toString(), right);
+        ExportReportToHTML exp = new ExportReportToHTML();
+        exp.export(engine.generateForHR(predicate), left);
+        exp.export(expect.toString(), right);
         assertEquals(FileUtils.readLines(new File(left)), FileUtils.readLines(new File(right)));
+        ExportReportToJSON exp2 = new ExportReportToJSON();
+        exp.export(engine.generateForHR(predicate), "d:\\test\\test.json");
     }
 }
