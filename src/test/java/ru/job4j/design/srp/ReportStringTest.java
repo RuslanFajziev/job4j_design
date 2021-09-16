@@ -2,6 +2,7 @@ package ru.job4j.design.srp;
 
 import org.junit.Test;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.function.Predicate;
@@ -11,11 +12,11 @@ import static org.junit.Assert.*;
 public class ReportStringTest {
 
     @Test
-    public void checkBuhReportString() {
+    public void checkBuhReportString() throws JAXBException, IOException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee worker1 = new Employee("Ivan", now, now, 150);
-        Employee worker2 = new Employee("Stepan", now, now, 200);
+        Employee worker1 = new Employee("Ivan", now, now, 150, "RUB");
+        Employee worker2 = new Employee("Stepan", now, now, 200, "RUB");
         store.add(worker1);
         store.add(worker2);
         ReportString engine = new ReportStringBuh(store);
@@ -26,24 +27,25 @@ public class ReportStringTest {
                 .append(worker1.getHired()).append(";")
                 .append(worker1.getFired()).append(";")
                 .append(worker1.getSalary()).append(";")
-                .append("RUB;")
+                .append(worker1.getTypeSalary()).append(";")
                 .append(System.lineSeparator())
                 .append(worker2.getName()).append(";")
                 .append(worker2.getHired()).append(";")
                 .append(worker2.getFired()).append(";")
                 .append(worker2.getSalary()).append(";")
-                .append("RUB;")
+                .append(worker2.getTypeSalary()).append(";")
                 .append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate), expect.toString());
+        assertEquals(engine.generate(predicate, "simple"), expect.toString());
+        System.out.println(engine.generate(predicate, "XML"));
     }
 
     @Test
-    public void checkHRReportString() {
+    public void checkHRReportString() throws JAXBException, IOException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee worker1 = new Employee("Ivan", now, now, 200);
-        Employee worker2 = new Employee("Stepan", now, now, 150);
+        Employee worker1 = new Employee("Ivan", 200);
+        Employee worker2 = new Employee("Stepan", 150);
         store.add(worker2);
         store.add(worker1);
         store.sortSalary();
@@ -58,11 +60,12 @@ public class ReportStringTest {
                 .append(worker2.getSalary()).append(";")
                 .append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate), expect.toString());
+        assertEquals(engine.generate(predicate, "simple"), expect.toString());
+        System.out.println(engine.generate(predicate, "XML"));
     }
 
     @Test
-    public void checkProgReportStringHTML() throws IOException {
+    public void checkProgReportStringHTML() throws IOException, JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker1 = new Employee("Ivan", now, now, 200);
@@ -90,6 +93,7 @@ public class ReportStringTest {
                 .append("</body>").append(System.lineSeparator())
                 .append("</html>").append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate), text.toString());
+        assertEquals(engine.generate(predicate, "html"), text.toString());
+        System.out.println(engine.generate(predicate, "XML"));
     }
 }
