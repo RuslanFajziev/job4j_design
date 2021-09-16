@@ -1,9 +1,5 @@
 package ru.job4j.design.srp;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.function.Predicate;
 
 public class ReportStringHTMLProg implements ReportString {
@@ -16,24 +12,22 @@ public class ReportStringHTMLProg implements ReportString {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append("Name; Hired; Fired; Salary;")
-                .append(System.lineSeparator());
+        text.append("<!DOCTYPE html>").append(System.lineSeparator())
+                .append("<html lang=\"ru\">").append(System.lineSeparator())
+                .append("<meta charset=\"UTF-8\">").append(System.lineSeparator())
+                .append("<title>Отчет о работниках отдела разработки</title>").append(System.lineSeparator())
+                .append("</head>").append(System.lineSeparator())
+                .append("<body>").append(System.lineSeparator())
+                .append("<h2>Отчет о работниках отдела разработки</h2>").append(System.lineSeparator());
         for (Employee employee : store.findBy(filter)) {
-            text.append(employee.getName()).append(";")
-                    .append(employee.getHired()).append(";")
-                    .append(employee.getFired()).append(";")
-                    .append(employee.getSalary()).append(";")
-                    .append(System.lineSeparator());
+            text.append("<h3>Name - ").append(employee.getName()).append("</h3>").append(System.lineSeparator())
+                    .append("Hired - ").append(employee.getHired()).append(";").append(System.lineSeparator())
+                    .append("Fired - ").append(employee.getFired()).append(";").append(System.lineSeparator())
+                    .append("Salary - ").append(employee.getSalary()).append(";").append(System.lineSeparator());
         }
-        return text.toString();
-    }
+        text.append("</body>").append(System.lineSeparator())
+                .append("</html>").append(System.lineSeparator());
 
-    public void exportToHTML(Predicate<Employee> filter) throws IOException {
-        String txt = generate(filter);
-        try (FileWriter fw = new FileWriter("src/main/resources/ReportStringHR.html");
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
-            out.println(txt);
-        }
+        return text.toString();
     }
 }

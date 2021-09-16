@@ -2,15 +2,13 @@ package ru.job4j.design.srp;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
-import org.apache.commons.io.FileUtils;
 
-public class ReportStringBuhTest {
+public class ReportStringTest {
 
     @Test
     public void checkBuhReportString() {
@@ -67,15 +65,31 @@ public class ReportStringBuhTest {
     public void checkProgReportStringHTML() throws IOException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
-        Employee worker1 = new Employee("Ivan", date, date, 200);
-        Employee worker2 = new Employee("Stepan", date, date, 150);
-        store.add(worker1);
+        Employee worker1 = new Employee("Ivan", now, now, 200);
+        Employee worker2 = new Employee("Stepan", now, now, 150);
         store.add(worker2);
-        ReportStringHTMLProg engine = new ReportStringHTMLProg(store);
+        store.add(worker1);
+        store.sortSalary();
+        ReportString engine = new ReportStringHTMLProg(store);
+        StringBuilder text = new StringBuilder();
+        text.append("<!DOCTYPE html>").append(System.lineSeparator())
+                .append("<html lang=\"ru\">").append(System.lineSeparator())
+                .append("<meta charset=\"UTF-8\">").append(System.lineSeparator())
+                .append("<title>Отчет о работниках отдела разработки</title>").append(System.lineSeparator())
+                .append("</head>").append(System.lineSeparator())
+                .append("<body>").append(System.lineSeparator())
+                .append("<h2>Отчет о работниках отдела разработки</h2>").append(System.lineSeparator())
+                .append("<h3>Name - ").append(worker1.getName()).append("</h3>").append(System.lineSeparator())
+                .append("Hired - ").append(worker1.getHired()).append(";").append(System.lineSeparator())
+                .append("Fired - ").append(worker1.getFired()).append(";").append(System.lineSeparator())
+                .append("Salary - ").append(worker1.getSalary()).append(";").append(System.lineSeparator())
+                .append("<h3>Name - ").append(worker2.getName()).append("</h3>").append(System.lineSeparator())
+                .append("Hired - ").append(worker2.getHired()).append(";").append(System.lineSeparator())
+                .append("Fired - ").append(worker2.getFired()).append(";").append(System.lineSeparator())
+                .append("Salary - ").append(worker2.getSalary()).append(";").append(System.lineSeparator())
+                .append("</body>").append(System.lineSeparator())
+                .append("</html>").append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        engine.exportToHTML(predicate);
-        assertEquals(FileUtils.readLines(new File("src/main/resources/ReportStringHR.html")), FileUtils.readLines(new File("src/main/resources/ReportStringHR.html")));
+        assertEquals(engine.generate(predicate), text.toString());
     }
 }

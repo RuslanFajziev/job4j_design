@@ -1,10 +1,5 @@
 package ru.job4j.design.srp;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Comparator;
 import java.util.function.Predicate;
 
 public class ReportStringHR implements ReportString {
