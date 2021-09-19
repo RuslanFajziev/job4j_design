@@ -36,8 +36,7 @@ public class ReportStringTest {
                 .append(worker2.getTypeSalary()).append(";")
                 .append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate, "simple"), expect.toString());
-        System.out.println(engine.generate(predicate, "XML"));
+        assertEquals(engine.generate(predicate), expect.toString());
     }
 
     @Test
@@ -60,8 +59,7 @@ public class ReportStringTest {
                 .append(worker2.getSalary()).append(";")
                 .append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate, "simple"), expect.toString());
-        System.out.println(engine.generate(predicate, "XML"));
+        assertEquals(engine.generate(predicate), expect.toString());
     }
 
     @Test
@@ -93,7 +91,6 @@ public class ReportStringTest {
                 .append("</body>").append(System.lineSeparator())
                 .append("</html>").append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
-        assertEquals(engine.generate(predicate, "html"), text.toString());
-        System.out.println(engine.generate(predicate, "XML"));
+        assertEquals(engine.generate(predicate), text.toString());
     }
 }
