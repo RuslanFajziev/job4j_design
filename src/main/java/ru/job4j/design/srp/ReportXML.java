@@ -15,9 +15,11 @@ public class ReportXML implements ReportString {
     }
 
     @Override
-    public String generate(Predicate<Employee> filter) throws JAXBException {
+    public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-            JAXBContext context = JAXBContext.newInstance(Employee.class);
+        JAXBContext context = null;
+        try {
+            context = JAXBContext.newInstance(Employee.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             try (StringWriter writer = new StringWriter()) {
@@ -29,6 +31,9 @@ public class ReportXML implements ReportString {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         return text.toString();
     }
 }
