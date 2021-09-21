@@ -23,11 +23,9 @@ public class ReportXML implements ReportString {
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             try (StringWriter writer = new StringWriter()) {
-                for (Employee employee : store.findBy(filter)) {
-                    marshaller.marshal(employee, writer);
+                    marshaller.marshal(new Employees(store.findBy(filter)), writer);
                     String result = writer.getBuffer().toString();
                     text.append(result);
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
