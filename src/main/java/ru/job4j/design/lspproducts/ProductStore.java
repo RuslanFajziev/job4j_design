@@ -1,4 +1,5 @@
 package ru.job4j.design.lspproducts;
 
-public class ProductStore {
+public interface ProductStore {
+    boolean accept(Food food);
 }
