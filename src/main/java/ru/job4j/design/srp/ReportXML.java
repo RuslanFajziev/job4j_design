@@ -19,7 +19,7 @@ public class ReportXML implements ReportString {
         StringBuilder text = new StringBuilder();
         JAXBContext context = null;
         try {
-            context = JAXBContext.newInstance(Employee.class);
+            context = JAXBContext.newInstance(Employees.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             try (StringWriter writer = new StringWriter()) {
