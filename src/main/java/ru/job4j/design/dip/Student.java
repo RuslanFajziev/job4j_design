@@ -1,16 +1,16 @@
 package ru.job4j.design.dip;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Student {
     String name;
     String lastName;
-    List<Courses> stores;
+    Map<String, Courses> stores = new HashMap<>();
 
-    public Student(String name, String lastName, List<Courses> stores) {
+    public Student(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
-        this.stores = stores;
     }
 
     public Student(String name) {
@@ -25,7 +25,7 @@ public class Student {
         return lastName;
     }
 
-    public List<Courses> getStores() {
+    public Map<String, Courses> getStores() {
         return stores;
     }
 }
