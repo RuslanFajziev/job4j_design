@@ -1,6 +1,6 @@
 package ru.job4j.design.lspcars;
 
-public class Car {
+public abstract class Car {
     private int size;
 
     public Car(int size) {
