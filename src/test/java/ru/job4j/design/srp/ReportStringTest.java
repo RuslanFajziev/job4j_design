@@ -92,7 +92,7 @@ public class ReportStringTest {
                 .append("</html>").append(System.lineSeparator());
         Predicate<Employee> predicate = em -> em.getSalary() >= 100;
         assertEquals(engine.generate(predicate), text.toString());
-        ReportString engine2 = new ReportXML(store);
-        System.out.println(engine2.generate(predicate));
+//        ReportString engine2 = new ReportXML(store);
+//        System.out.println(engine2.generate(predicate));
     }
 }
