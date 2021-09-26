@@ -1,11 +1,7 @@
 package ru.job4j.design.lspcars;
 
 public abstract class Car {
-    private int size;
-
-    public Car(int size) {
-        this.size = size;
-    }
+    public int size;
 
     public int getSize() {
         return size;

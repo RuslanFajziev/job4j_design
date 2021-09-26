@@ -19,20 +19,18 @@ public class ParkingAllCars implements Parking {
     public boolean parkCar(Car car) {
         int size = car.getSize();
         if (size > 1 && (sizeTruck - markerTruck) >= 1) {
-            for (int i = markerTruck; i < markerTruck + 1; i++) {
-                trucks[i] = car;
-            }
-            markerTruck += 1;
+            trucks[markerTruck++] = car;
             return true;
-        } else {
-            if ((sizeAuto - markerAuto) >= size) {
-                int newMarkerCars = markerAuto + size;
-                for (int i = markerAuto; i < newMarkerCars; i++) {
-                    autos[i] = car;
-                }
-                markerAuto = newMarkerCars;
-                return true;
+        } else if (size > 1 && (sizeAuto - markerAuto) >= size) {
+            int newMarkerCars = markerAuto + size;
+            for (int i = markerAuto; i < newMarkerCars; i++) {
+                autos[i] = car;
             }
+            markerAuto = newMarkerCars;
+            return true;
+        } else if (size == 1 && (sizeAuto - markerAuto) >= 1) {
+            autos[markerAuto++] = car;
+            return true;
         }
         return false;
     }

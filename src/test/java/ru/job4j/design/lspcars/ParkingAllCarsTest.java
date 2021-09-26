@@ -14,8 +14,8 @@ public class ParkingAllCarsTest {
         Car carBig1 = new Truck(2);
         Car carBig2 = new Truck(3);
         Car carBig3 = new Truck(4);
-        Car carSmall1 = new Auto(1);
-        Car carSmall2 = new Auto(1);
+        Car carSmall1 = new Auto();
+        Car carSmall2 = new Auto();
         parkingAllCars.parkCar(carBig1); //true trucks
         parkingAllCars.parkCar(carBig2); //true trucks
         parkingAllCars.parkCar(carBig3); //true autos
@@ -32,8 +32,8 @@ public class ParkingAllCarsTest {
         Car carBig1 = new Truck(2);
         Car carBig2 = new Truck(3);
         Car carBig3 = new Truck(4);
-        Car carSmall1 = new Auto(1);
-        Car carSmall2 = new Auto(1);
+        Car carSmall1 = new Auto();
+        Car carSmall2 = new Auto();
         parkingAllCars.parkCar(carSmall1); //true autos
         parkingAllCars.parkCar(carSmall2); //true autos
         parkingAllCars.parkCar(carBig1); //true trucks
