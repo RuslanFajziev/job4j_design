@@ -21,8 +21,7 @@ public class AddItem implements UserAction {
             Item item = new Item(0, name);
             memStore.add(item);
         } else if (typeAdd == 2) {
-            Item item = new Item(currentId, name);
-            memStore.add(item);
+            memStore.getLst().get(currentId).getLst().add(new Item(currentId, name));
         } else {
             throw new IllegalArgumentException("incorrect input");
         }
