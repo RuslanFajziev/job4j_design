@@ -13,7 +13,7 @@ public class ExitProgram implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemStore memStore) {
+    public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
         out.println("-------------------------");
         return false;
     }

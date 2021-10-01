@@ -16,22 +16,32 @@ public class AddItem implements UserAction {
 
     @Override
     public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
-        currentStore.setLst(rootStore.getLst());
         int typeAdd = input.askInt("Enter 1 - primary, 2 - child elements: ");
-        String name = input.askStr("Enter name: ");
         int level = currentStore.getLevel();
         if (typeAdd == 1) {
+            String name = input.askStr("Enter name: ");
             Item item = new Item(name, level);
             currentStore.add(item);
+            currentStore.setCurrentId(currentStore.getCurrentId() + 1);
         } else if (typeAdd == 2) {
+            if (currentStore.getLst().isEmpty()) {
+                out.println("Empty list menu. Enter 1 only");
+                return true;
+            }
+            String name = input.askStr("Enter name: ");
             Item item = new Item(name, level + 1);
-            int index = currentStore.getLst().size() - 1;
+            int index = currentStore.getCurrentId();
+            if (index < 0) {
+                out.println("Index current < 0!");
+                return true;
+            }
             List<Item> newCurrentList = currentStore.getLst().get(index).getLst();
             newCurrentList.add(item);
+            currentStore.setCurrentId(currentStore.getCurrentId() + 1);
             currentStore.setLst(newCurrentList);
             currentStore.setLevel(level + 1);
         } else {
-            throw new IllegalArgumentException("incorrect input");
+            out.println("ENTER 1 or 2");
         }
         return true;
     }

@@ -11,35 +11,22 @@ public class ShowAll implements UserAction {
 
     @Override
     public String name() {
-        return "=== Show all items ===";
+        return "=== Show tree menu ===";
     }
 
     @Override
     public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
-        recursionPrint(rootStore, currentStore);
+        recursionPrint(rootStore.getLst());
         return true;
     }
 
-    private void recursionPrint(MemStore rootStore, MemStore currentStore) {
-        List<Item> newCurrentList = rootStore.getLst();
-        for (var elm : newCurrentList) {
-            print(elm);
+    private void recursionPrint(List<Item> currentList) {
+        for (var elm : currentList) {
+            String delimiter = "-".repeat(elm.getLevel());
+            out.println(delimiter + " " + elm.getName());
             if (!elm.getLst().isEmpty()) {
-                currentStore.setLst(elm.getLst());
+                recursionPrint(elm.getLst());
             }
         }
-    }
-
-
-    private void print(Item item) {
-        String delimiter = "-".repeat(item.getLevel());
-        out.println(delimiter + " " + item.getName());
-//        private static void printMenu(Element root, int level) {
-//            String delimiter = "-".repeat(level);
-//            System.out.println(delimiter + " " + root.getName());
-//            for (Element subItem : root.getChildren()) {
-//                printMenu(subItem, level + 1);
-//            }
-//        }
     }
 }

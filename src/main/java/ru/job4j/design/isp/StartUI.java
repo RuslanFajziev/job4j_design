@@ -19,6 +19,7 @@ public class StartUI {
                 out.println("Wrong input, you can select: 0 .. " + (actions.size() - 1));
                 continue;
             }
+            currentStore.setLst(rootStore.getLst());
             UserAction action = actions.get(select);
             out.println(action.name());
             run = action.execute(input, rootStore, currentStore);

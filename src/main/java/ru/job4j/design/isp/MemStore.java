@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MemStore {
     private List<Item> lst = new ArrayList<>();
-    private int currentId = 0;
+    private int currentId = -1;
     private int level = 0;
 
     public int getLevel() {
@@ -34,40 +34,5 @@ public class MemStore {
 
     public void add(Item item) {
         lst.add(item);
-        int index = lst.indexOf(item);
-        if (index != -1) {
-            setCurrentId(index);
-        }
-    }
-
-    public boolean delete(String name) {
-        int index = findIndex(name);
-        if (index != 1) {
-            lst.remove(index);
-            return true;
-        }
-        return false;
-    }
-
-    public int select(String name) {
-        int index = findIndex(name);
-        if (index != 1) {
-            setCurrentId(index);
-            return index;
-        }
-        return index;
-    }
-
-    public int findIndex(String name) {
-        for (var item : lst) {
-            if (item.getName().equals(name)) {
-                int index = lst.indexOf(item);
-                if (index != -1) {
-                    return index;
-                }
-                break;
-            }
-        }
-        return -1;
     }
 }

@@ -14,11 +14,13 @@ public class SelectItem implements UserAction {
 
     @Override
     public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
-        currentStore.setLst(rootStore.getLst());
         String name = input.askStr("Enter name: ");
-        boolean result = FindItem.find(name, rootStore, currentStore);
+        boolean result = FindItem.find(name, rootStore.getLst());
         if (result) {
-            out.println("Select item successful. name: " + FindItem.getLst().get(FindItem.getIndex()).getName() + "index: " + FindItem.getIndex());
+            currentStore.setLst(FindItem.getLst());
+            currentStore.setLevel(FindItem.getLst().get(FindItem.getIndex()).getLevel());
+            currentStore.setCurrentId(FindItem.getIndex());
+            out.println("Select item successful. name: " + FindItem.getLst().get(FindItem.getIndex()).getName() + " index: " + FindItem.getIndex());
         } else {
             out.println("== Select item ERROR!!!!! ==");
         }

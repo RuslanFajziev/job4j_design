@@ -14,19 +14,16 @@ public class FindItem {
         return lst;
     }
 
-    public static boolean find(String nameItem, MemStore rootStore, MemStore currentStore) {
-        List<Item> newCurrentList = rootStore.getLst();
+    public static boolean find(String nameItem, List<Item> currentList) {
         boolean rsl = false;
-        for (var elm : newCurrentList) {
+        for (var elm : currentList) {
             if (elm.getName().equals(nameItem)) {
-                index = newCurrentList.indexOf(elm);
-                lst = newCurrentList;
-                currentStore.setLst(newCurrentList);
+                index = currentList.indexOf(elm);
+                lst = currentList;
                 rsl = true;
                 break;
             } else if (!elm.getName().equals(nameItem) && !elm.getLst().isEmpty()) {
-                currentStore.setLst(newCurrentList);
-                find(nameItem, rootStore, currentStore);
+                find(nameItem, elm.getLst());
             }
         }
         return rsl;

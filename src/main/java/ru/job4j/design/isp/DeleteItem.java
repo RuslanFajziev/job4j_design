@@ -1,5 +1,7 @@
 package ru.job4j.design.isp;
 
+import java.util.List;
+
 public class DeleteItem implements UserAction {
     private final Output out;
 
@@ -14,11 +16,13 @@ public class DeleteItem implements UserAction {
 
     @Override
     public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
-        currentStore.setLst(rootStore.getLst());
         String name = input.askStr("Enter name for delete: ");
-        boolean result = FindItem.find(name, rootStore, currentStore);
+        boolean result = FindItem.find(name, rootStore.getLst());
         if (result) {
-            currentStore.getLst().remove(FindItem.getIndex());
+            List<Item> newCurrentList = FindItem.getLst();
+            int index = FindItem.getIndex();
+            newCurrentList.remove(index);
+            currentStore.setLst(newCurrentList);
             out.println("Delete successful");
         } else {
             out.println("== Delete ERROR!!!!! ==");
