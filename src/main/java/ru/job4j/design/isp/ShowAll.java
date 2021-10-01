@@ -15,11 +15,31 @@ public class ShowAll implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemStore memStore) {
-        List<Item> lst = memStore.getLst();
-        for (var item : lst) {
-            out.println(item.getName() + " " + item.getRootId());
-        }
+    public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
+        recursionPrint(rootStore, currentStore);
         return true;
+    }
+
+    private void recursionPrint(MemStore rootStore, MemStore currentStore) {
+        List<Item> newCurrentList = rootStore.getLst();
+        for (var elm : newCurrentList) {
+            print(elm);
+            if (!elm.getLst().isEmpty()) {
+                currentStore.setLst(elm.getLst());
+            }
+        }
+    }
+
+
+    private void print(Item item) {
+        String delimiter = "-".repeat(item.getLevel());
+        out.println(delimiter + " " + item.getName());
+//        private static void printMenu(Element root, int level) {
+//            String delimiter = "-".repeat(level);
+//            System.out.println(delimiter + " " + root.getName());
+//            for (Element subItem : root.getChildren()) {
+//                printMenu(subItem, level + 1);
+//            }
+//        }
     }
 }

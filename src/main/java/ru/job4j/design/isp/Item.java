@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
-    private int rootId;
     private List<Item> lst = new ArrayList<>();
     private String name;
+    private int level;
 
-    public Item(int rootId, String name) {
-        this.rootId = rootId;
+    public Item(String name, int level) {
         this.name = name;
+        this.level = level;
     }
 
     public String getName() {
@@ -21,19 +21,12 @@ public class Item {
         this.name = name;
     }
 
-    public Item(int rootId) {
-        this.rootId = rootId;
+    public int getLevel() {
+        return level;
     }
 
-    public Item() {
-    }
-
-    public int getRootId() {
-        return rootId;
-    }
-
-    public void setRootId(int rootId) {
-        this.rootId = rootId;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public List<Item> getLst() {

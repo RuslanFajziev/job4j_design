@@ -6,9 +6,22 @@ import java.util.List;
 public class MemStore {
     private List<Item> lst = new ArrayList<>();
     private int currentId = 0;
+    private int level = 0;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public List<Item> getLst() {
         return lst;
+    }
+
+    public void setLst(List<Item> lst) {
+        this.lst = lst;
     }
 
     public int getCurrentId() {

@@ -13,9 +13,12 @@ public class DeleteItem implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemStore memStore) {
+    public boolean execute(Input input, MemStore rootStore, MemStore currentStore) {
+        currentStore.setLst(rootStore.getLst());
         String name = input.askStr("Enter name for delete: ");
-        if (memStore.delete(name)) {
+        boolean result = FindItem.find(name, rootStore, currentStore);
+        if (result) {
+            currentStore.getLst().remove(FindItem.getIndex());
             out.println("Delete successful");
         } else {
             out.println("== Delete ERROR!!!!! ==");

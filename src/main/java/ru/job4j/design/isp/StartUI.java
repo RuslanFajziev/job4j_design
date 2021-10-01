@@ -9,7 +9,7 @@ public class StartUI {
         this.out = out;
     }
 
-    public void init(Input input, List<UserAction> actions, MemStore memStore) {
+    public void init(Input input, List<UserAction> actions, MemStore rootStore, MemStore currentStore) {
         boolean run = true;
         while (run) {
             this.showMenu(actions);
@@ -21,7 +21,7 @@ public class StartUI {
             }
             UserAction action = actions.get(select);
             out.println(action.name());
-            run = action.execute(input, memStore);
+            run = action.execute(input, rootStore, currentStore);
         }
     }
 
@@ -36,7 +36,8 @@ public class StartUI {
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
         Input input = new ConsoleInput();
-        MemStore memStore = new MemStore();
+        MemStore rootStore = new MemStore();
+        MemStore currentStore = new MemStore();
         List<UserAction> actions = List.of(
                 new AddItem(output),
                 new ShowAll(output),
@@ -44,6 +45,6 @@ public class StartUI {
                 new SelectItem(output),
                 new ExitProgram(output)
         );
-        new StartUI(output).init(input, actions, memStore);
+        new StartUI(output).init(input, actions, rootStore, currentStore);
     }
 }
