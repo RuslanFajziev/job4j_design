@@ -17,10 +17,13 @@ public class SelectItem implements UserAction {
         String name = input.askStr("Enter name: ");
         boolean result = FindItem.find(name, rootStore.getLst());
         if (result) {
-            currentStore.setLst(FindItem.getLst());
-            currentStore.setLevel(FindItem.getLst().get(FindItem.getIndex()).getLevel());
-            currentStore.setCurrentId(FindItem.getIndex());
-            out.println("Select item successful. name: " + FindItem.getLst().get(FindItem.getIndex()).getName() + " index: " + FindItem.getIndex());
+            var lstFind = FindItem.getLst();
+            var itemFind = lstFind.get(FindItem.getIndex());
+            var index = FindItem.getIndex();
+            currentStore.setLst(lstFind);
+            currentStore.setLevel(itemFind.getLevel());
+            currentStore.setCurrentId(index);
+            out.println("Select item successful. name: " + itemFind.getName() + " index: " + index);
         } else {
             out.println("== Select item ERROR!!!!! ==");
         }

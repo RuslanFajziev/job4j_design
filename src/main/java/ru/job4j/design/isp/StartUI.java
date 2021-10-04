@@ -11,6 +11,7 @@ public class StartUI {
 
     public void init(Input input, List<UserAction> actions, MemStore rootStore, MemStore currentStore) {
         boolean run = true;
+        currentStore.setLst(rootStore.getLst());
         while (run) {
             this.showMenu(actions);
             out.println("-------------------------");
@@ -19,7 +20,6 @@ public class StartUI {
                 out.println("Wrong input, you can select: 0 .. " + (actions.size() - 1));
                 continue;
             }
-            currentStore.setLst(rootStore.getLst());
             UserAction action = actions.get(select);
             out.println(action.name());
             run = action.execute(input, rootStore, currentStore);

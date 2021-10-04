@@ -24,7 +24,8 @@ public class AddItem implements UserAction {
             currentStore.add(item);
             currentStore.setCurrentId(currentStore.getCurrentId() + 1);
         } else if (typeAdd == 2) {
-            if (currentStore.getLst().isEmpty()) {
+            var lstCurrent = currentStore.getLst();
+            if (lstCurrent.isEmpty()) {
                 out.println("Empty list menu. Enter 1 only");
                 return true;
             }
@@ -35,9 +36,10 @@ public class AddItem implements UserAction {
                 out.println("Index current < 0!");
                 return true;
             }
-            List<Item> newCurrentList = currentStore.getLst().get(index).getLst();
+            List<Item> newCurrentList = lstCurrent.get(index).getLst();
             newCurrentList.add(item);
-            currentStore.setCurrentId(currentStore.getCurrentId() + 1);
+            int newCurrentId = newCurrentList.indexOf(item);
+            currentStore.setCurrentId(newCurrentId);
             currentStore.setLst(newCurrentList);
             currentStore.setLevel(level + 1);
         } else {

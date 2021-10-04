@@ -15,17 +15,18 @@ public class FindItem {
     }
 
     public static boolean find(String nameItem, List<Item> currentList) {
-        boolean rsl = false;
         for (var elm : currentList) {
             if (elm.getName().equals(nameItem)) {
                 index = currentList.indexOf(elm);
                 lst = currentList;
-                rsl = true;
-                break;
+                return true;
             } else if (!elm.getName().equals(nameItem) && !elm.getLst().isEmpty()) {
-                find(nameItem, elm.getLst());
+                boolean rslRecursion = find(nameItem, elm.getLst());
+                if (rslRecursion) {
+                    return true;
+                }
             }
         }
-        return rsl;
+        return false;
     }
 }
