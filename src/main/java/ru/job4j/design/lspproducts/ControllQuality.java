@@ -3,6 +3,7 @@ package ru.job4j.design.lspproducts;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ControllQuality {
@@ -20,6 +21,17 @@ public class ControllQuality {
         }
     }
 
+    public void resort() {
+        HashSet<Food> tmpStoreFood = new HashSet<>();
+        for (var elmStore : store) {
+            tmpStoreFood.addAll(elmStore.getStore());
+            elmStore.clearStore();
+        }
+        for (var elmFood : tmpStoreFood) {
+            distribute(elmFood);
+        }
+    }
+
     public static void main(String[] args) {
         List<ProductStore> lst = List.of(new Shop(), new Trash(), new Warehouse());
         ControllQuality controllQuality = new ControllQuality(lst);
@@ -31,6 +43,7 @@ public class ControllQuality {
             controllQuality.distribute(milk);
             controllQuality.distribute(apples);
             controllQuality.distribute(cheese);
+            controllQuality.resort();
         } catch (ParseException e) {
             e.printStackTrace();
         }

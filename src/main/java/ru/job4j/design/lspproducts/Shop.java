@@ -4,7 +4,22 @@ import java.util.Calendar;
 import java.util.HashSet;
 
 public class Shop implements ProductStore {
-    HashSet<Food> store = new HashSet<>();
+    private HashSet<Food> store = new HashSet<>();
+
+    @Override
+    public HashSet<Food> getStore() {
+        return store;
+    }
+
+    @Override
+    public void setStore(HashSet<Food> newStore) {
+        this.store = newStore;
+    }
+
+    @Override
+    public void clearStore() {
+        store.clear();
+    }
 
     @Override
     public boolean accept(Food food) {
