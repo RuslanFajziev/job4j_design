@@ -2,17 +2,18 @@ package ru.job4j.design.lspproducts;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Trash implements ProductStore {
-    private HashSet<Food> store = new HashSet<>();
+    private Set<Food> store = new HashSet<>();
 
     @Override
-    public HashSet<Food> getStore() {
+    public Set<Food> getStore() {
         return store;
     }
 
     @Override
-    public void setStore(HashSet<Food> newStore) {
+    public void setStore(Set<Food> newStore) {
         this.store = newStore;
     }
 

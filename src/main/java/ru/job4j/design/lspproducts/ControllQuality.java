@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ControllQuality {
     List<ProductStore> store = new ArrayList<>();
@@ -22,7 +23,7 @@ public class ControllQuality {
     }
 
     public void resort() {
-        HashSet<Food> tmpStoreFood = new HashSet<>();
+        Set<Food> tmpStoreFood = new HashSet<>();
         for (var elmStore : store) {
             tmpStoreFood.addAll(elmStore.getStore());
             elmStore.clearStore();

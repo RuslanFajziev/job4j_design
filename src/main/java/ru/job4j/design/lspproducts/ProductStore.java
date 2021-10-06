@@ -1,10 +1,9 @@
 package ru.job4j.design.lspproducts;
-
-import java.util.HashSet;
+import java.util.Set;
 
 public interface ProductStore {
     boolean accept(Food food);
-    HashSet<Food> getStore();
-    void setStore(HashSet<Food> newStore);
+    Set<Food> getStore();
+    void setStore(Set<Food> newStore);
     void clearStore();
 }
